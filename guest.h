@@ -29,9 +29,7 @@ class Guest{
     Guest();
 
     string getUserName();
-        //return this-> userName;
     
-
     string getPassword();
 
     int getMemNum();
