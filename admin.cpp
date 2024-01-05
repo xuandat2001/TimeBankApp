@@ -9,7 +9,6 @@ using std::cout;
     Guest guest2;
     string userName2 = guest2.getUserName();
     string password2 = guest2.getPassword();
-    int memNum2 = guest2.getMemNum();
     string fullName2 = guest2.getFullName();
     string email2 = guest2.getEmail();
     int phoneNumber2 = guest2.getPhoneNumber();
@@ -28,7 +27,7 @@ using std::cout;
 
     void Admin::modifyPassword(){
         
-        int memNo;
+        int memNum2;
         int found = 0; //variable to check for found result
         fstream myfile, myfile1;
 
@@ -39,6 +38,7 @@ using std::cout;
             myfile.close();
 
         } else {
+            int memNo;
             cout << "Enter the member number you want to modify: ";
             cin >> memNo;
             myfile1.open("Newpwd.dat", std::ios::app | std::ios::out);

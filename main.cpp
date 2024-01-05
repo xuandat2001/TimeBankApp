@@ -28,11 +28,11 @@ int main(){
         cin >> choice1;
 
         if (choice1 == 1){
-            Guests.registerMember();//cant call function
+            Guests.registerMember();
             }
 
         else if (choice1 == 2){
-            Guests.viewSupporters();//cant call function
+            Guests.viewSupporters();
 
             } else {
         cout << "Invalid choice. Please choose 0, 1 or 2\n";
@@ -53,14 +53,22 @@ int main(){
             if (Apassword == Apword){
                 cout << "Sign in successfully \n";
 
-                int memNumber;
-                int memNum = Guests.getMemNum(); //cant call function
+                /*int memNumber;
+                int memNum = Guests.getMemNum(); 
                 cout << "Which member's password to change? \n" << "Input member number: ";
                 cin >> memNumber;
                 if (memNumber == memNum){
                     admin.modifyPassword();
                 } else {
                     cout << "Member may not exist. Please enter again. \n";
+                }*/
+                int choice2;
+                cout << "This is your menu:\n" << "0. Exit\n" << "1. Modify member's password\n";
+                cin >> choice2;
+                if (choice2 == 1){
+                    admin.modifyPassword();
+                } else {
+                    cout << "Invalid choice. Please select 0 or 1. \n";
                 }
                 
             } else {

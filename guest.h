@@ -13,7 +13,7 @@ class Guest{
     private:
     string userName;
     string password;
-    int memNum = 0;
+    string memID;
     string fullName;
     string email;
     int phoneNumber;
@@ -21,7 +21,7 @@ class Guest{
     int creditPoint;
     int ratingScore;
     string skillsInfo;
-    bool Availability;
+    //bool Availability;
     int creditPoints = 0;
 
     public:
@@ -32,7 +32,7 @@ class Guest{
     
     string getPassword();
 
-    int getMemNum();
+    string getMemID();
 
     string getFullName();
 
