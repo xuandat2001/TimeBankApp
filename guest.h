@@ -1,3 +1,5 @@
+#ifndef _GUEST_H_     
+#define _GUEST_H_
 #include <iostream>
 #include <vector>
 using std::cin;
@@ -10,8 +12,7 @@ private:
     int phoneNumber, creditPoint;
 
 public:
-    Guest(string username = "", string password = "",
-          string fullname = "", string email = "", string homeAddress = "", string skillInfo = "",
-          string location = "", int phoneNumber = 0, int creditPoint = 0);
+    Guest();  
     bool registerMenber();
 };
+#endif

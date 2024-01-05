@@ -6,20 +6,7 @@ using std::cin;
 using std::cout;
 using std::string;
 // Constructor of Guest class
-Guest::Guest(string username = "", string password = "",
-             string fullname = "", string email = "", string homeAddress = "", string skillInfo = "",
-             string location = "", int phoneNumber = 0, int creditPoint = 0)
-{
-    this->username = username;
-    this->password = password;
-    this->fullname = fullname;
-    this->email = email;
-    this->homeAddress = homeAddress;
-    this->skillInfo = skillInfo;
-    this->location = location;
-    this->phoneNumber = phoneNumber;
-    this->creditPoint = creditPoint;
-}
+Guest::Guest(){}
 
 // Method
 
