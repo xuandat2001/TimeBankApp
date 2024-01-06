@@ -1,8 +1,9 @@
+#include<supporter.h>
+#ifndef _GUEST_H
+#define _GUEST_H
 #include <iostream>
 #include <fstream>
 
-#ifndef _GUEST_H
-#define _GUEST_H
 using namespace std;
 using std::string;
 using std::cin;
@@ -55,5 +56,6 @@ public:
     void registerMember();
 
     void viewSupporters();
+    friend class Supporter{};
 };
 #endif
