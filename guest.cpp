@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "Guest.h"
+#include "guest.h"
 
 using namespace std;
 using std::string;

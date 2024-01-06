@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Guest.h"
 #include "Admin.h"
-
+#include "Member.h"
 using namespace std;
 using std::string;
 using std::cin;
@@ -10,7 +10,7 @@ using std::cout;
 
 int main(){
     int choice;
-
+    Member member;
     Guest Guests;
     Admin admin;
 
@@ -38,7 +38,48 @@ int main(){
         cout << "Invalid choice. Please choose 0, 1 or 2\n";
         } 
         } 
-
+    else if(choice == 2){
+        member.getInfo();
+        string userName;
+        string password;
+        while(1){
+            cout << "Enter your username: ";
+            std::getline(cin>>std::ws, userName); //getusername
+            cout<<"Enter your Password: ";
+            std::getline(cin>>std::ws, password); //get password
+            if (member.loginMem(userName,password) == true)
+            {
+                int choice; 
+                cout << "This is your menu:\n" << "0. Exit\n" << "1. Show Information\n" << "2. Set Status\n";
+                cout<<"Enter ur choice";
+                cin>>choice;
+                if (choice == 1)
+                {
+                    member.showInfo();
+                    break;
+                }
+                else if(choice == 2){
+                    if (member.setStatus() == 1)
+                    {
+                        member.showInfoVip();
+                        break;
+                    }
+                    else{
+                        cout<<"This Mem was unlisted";
+                        break;
+                    } 
+                }
+                else{
+                    cout<<"Exit";
+                    break;
+                }
+                
+            }
+            else{
+                cout<<"Please Enter again \n";
+            }
+        }
+    }
     else if (choice == 3) {
         string AuserName;
         string Apassword;

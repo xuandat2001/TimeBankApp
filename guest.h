@@ -10,7 +10,7 @@ using std::cout;
 
 class Guest{
     
-    private:
+protected:
     string userName;
     string password;
     string memID;
@@ -24,7 +24,7 @@ class Guest{
     //bool Availability;
     int creditPoints = 0;
 
-    public:
+public:
     
     Guest();
 
