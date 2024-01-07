@@ -2,8 +2,8 @@
 #include "supporter.h"
 using std::cin;
 using std::cout;
-    Supporter::Supporter(){};
-    bool Supporter::rateMember(Member &mem){
+   Supporter::Supporter(){};
+    /* bool Supporter::rateMember(Member &mem){
         string name;
         int id;
         int score;
@@ -16,4 +16,4 @@ using std::cout;
         
         // }
         
-    }
+    }*/

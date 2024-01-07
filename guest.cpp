@@ -35,9 +35,6 @@ using std::cout;
     int Guest::getCreditPoint(){
         return creditPoint;
     };
-    int Guest::getRatingScore(){
-        return ratingScore;
-    };
     /*bool Guest::getAvailability(){
         return Availability;
     };*/
@@ -64,14 +61,14 @@ using std::cout;
         cin >> address;
         cout << "\nEnter your skills: ";
         cin >> skillsInfo;
-        creditPoints += 20;
+        creditPoint += 20;
 
         myfile.open("pwd.dat", std::ios::app | std::ios::out); //open a file
         myfile << password << " " << memID << " " << userName << " " << fullName << " " << email << " " 
-                << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoints << "\n"; //save data to file
+                << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << "\n"; //save data to file
         myfile.close();
            
-        cout << "Your credit points is added to a total of: " << creditPoints << "\n" << "You have registered successfully.\n";
+        cout << "Your credit points is added to a total of: " << creditPoint << "\n" << "You have registered successfully.\n";
     }
 
     void Guest::viewSupporters(){
@@ -86,7 +83,7 @@ using std::cout;
             cout << " No data to be found\n";   
             
          } else {
-            myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoints; //take data from file and assign to variables
+            myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
             while (!myfile.eof()){ //if not at the end of file
                 cout << "Member No." << totalMembers++ << "\n"; //output to the terminal
                 cout << "Username: " << userName << "\n";
@@ -96,9 +93,9 @@ using std::cout;
                 cout << "Phone number: " << phoneNumber << "\n";
                 cout << "Address: " << address << "\n";
                 cout << "Skills: " << skillsInfo << "\n";
-                cout << "Credit points: " << creditPoints << "\n";
+                cout << "Credit points: " << creditPoint << "\n";
                 cout << endl;
-            myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoints; //assign again to terminate the loop
+            myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //assign again to terminate the loop
             }
             if (totalMembers == 0){ //check if there is no data input ever before 
                 cout << " No data to be found\n";

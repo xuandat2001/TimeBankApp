@@ -12,8 +12,7 @@ using std::string;
 int main()
 {
     int choice;
-    Member mem;
-    std::vector<Member> listOfMem;
+    listofMem listOfMem;
     Guest Guests;
     Admin admin;
 
@@ -56,11 +55,8 @@ int main()
     }
     else if (choice == 2)
     {
-
-        mem.getInfo(); // get information from the file
-        listOfMem.push_back(mem);
-        for (int i = 0; i < listOfMem.size(); i++)
-        {
+        listOfMem.getInforMems();
+        /*
             string userName;
             string password;
             while (1)
@@ -104,19 +100,20 @@ int main()
                         cout << "Enter the city: ";
                         std::getline(cin >> std::ws, condition);
                         listOfMem[i].search(condition);
-                    }*/
+                    }
                     else
                     {
                         cout << "Exit";
                         break;
                     }
+            
                 }
                 else
                 {
                     cout << "Please Enter again \n";
                 }
             }
-        }
+       */ 
     }
     else if (choice == 3)
     {

@@ -5,12 +5,33 @@
 using std::cin;
 using std::cout;
 using std::string;
-Member::Member(){};
+Member::Member(string userNameVal="",
+    string passwordVal = "",
+    string idVal = "",
+    string fullNameVal = "",
+    string emailVal = "",
+    int phoneNumberVal = 0,
+    string addressVal = "",
+    int creditPointVal = 0,
+    string skillsInfoVal = "",
+    int hostRatingScoreVal= 0,
+    int comsumingPointVal = 0,
+    bool availabilityVal = false,
+    string reviewVal=""): Guest(string userNameVal,
+    string passwordVal,
+    string idVal,
+    string fullNameVal,
+    string emailVal,
+    int phoneNumberVal,
+    string addressVal ,
+    int creditPointVal,
+    string skillsInfoVal),
+     hostRatingScore(hostRatingScoreVal),comsumingPoint(comsumingPointVal),
+     availability(availabilityVal),review(reviewVal){};
 // Get infomation from the file
-void Member::getInfo()
+/*void Member::getInfo()
 {
     fstream myfile;
-
     myfile.open("pwd.dat", std::ios::in);
 
     if (!myfile)
@@ -97,7 +118,12 @@ int Member::setStatus()
     else if (choice == 2)
     {
         availability == false;
-        cout << "dont distrup";
+        fstream myfile;
+        myfile.open("supporters.dat",std::ios::in); // open a file
+        myfile >> userName >> fullName  >> email
+               >> phoneNumber >> address  >> skillsInfo; // save data to file
+        myfile.close();
+        cout << "dont distrup\n";
         return 2;
     }
     else
@@ -123,4 +149,4 @@ int Member::setStatus()
 //     int id;
 //     string userName;
 
-// }
+// }*/

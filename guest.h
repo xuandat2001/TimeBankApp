@@ -1,8 +1,10 @@
-#include<supporter.h>
+//#include<supporter.h>
 #ifndef _GUEST_H
 #define _GUEST_H
 #include <iostream>
 #include <fstream>
+//#include<supporter.h>
+
 
 using namespace std;
 using std::string;
@@ -19,11 +21,10 @@ protected:
     string email;
     int phoneNumber;
     string address;
-    int creditPoint;
-    int ratingScore;
+    int creditPoint = 0;
     string skillsInfo;
     //bool Availability;
-    int creditPoints = 0;
+    
 
 public:
     
@@ -45,7 +46,7 @@ public:
 
     int getCreditPoint();
 
-    int getRatingScore();
+
 
     /*bool getAvailability(){
         return this->Availability;
@@ -56,6 +57,6 @@ public:
     void registerMember();
 
     void viewSupporters();
-    friend class Supporter{};
+    //friend class Supporter{};
 };
 #endif
