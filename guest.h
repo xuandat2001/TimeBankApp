@@ -21,7 +21,7 @@ protected:
     string email;
     int phoneNumber;
     string address;
-    int creditPoint = 0;
+    int creditPoint;
     string skillsInfo;
     //bool Availability;
     

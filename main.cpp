@@ -12,10 +12,10 @@ using std::string;
 int main()
 {
     int choice;
-    listofMem listOfMem;
+    std::vector<Member> ListofMember;
     Guest Guests;
     Admin admin;
-
+    // ListofMember.push_back(mem.getInfo())
     cout << "EEET2482/COSC2082 ASSIGNMENT\n"
          << "TIME BANK APPLICATION\n"
          << "Instructor: Mr. Tran Duc Linh\n"
@@ -55,66 +55,97 @@ int main()
     }
     else if (choice == 2)
     {
-        listOfMem.getInforMems();
-        /*
-            string userName;
-            string password;
-            while (1)
+
+        string userName;
+        string password;
+        string id;
+        string fullName;
+        string email;
+        string phoneNumber;
+        string address;
+        string creditPoint;
+        string skillsInfo;
+        int hostRatingScore = 0;
+        int comsumingPoint = 0;
+        bool availability = false;
+        string review;
+        fstream myfile;
+        myfile.open("pwd.dat", std::ios::in);
+
+        if (!myfile)
+        {
+            cout << " No data to be found\n";
+        }
+        else
+        {
+            // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; // take data from file and assign to variables
+            while (!myfile.eof())
+            { // if not at the end of file
+                myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint;
+                Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address, std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review);
+                ListofMember.push_back(mem);
+            }
+        }
+        myfile.close();
+
+        string userNameVal;
+        string passwordVal;
+        cout << "Enter your username: ";
+        std::getline(cin >> std::ws, userNameVal); // getusername
+        cout << "Enter your Password: ";
+        std::getline(cin >> std::ws, passwordVal); // get password
+
+        for (int i = 0; i < ListofMember.size(); i++)
+        {
+            if (ListofMember[i].loginMem(userNameVal, passwordVal) == true)
             {
-                cout << "Enter your username: ";
-                std::getline(cin >> std::ws, userName); // getusername
-                cout << "Enter your Password: ";
-                std::getline(cin >> std::ws, password); // get password
-                if (listOfMem[i].loginMem(userName, password) == true)
+                int choice; // get choice from user
+                cout << "This is your menu:\n"
+                     << "0. Exit\n"
+                     << "1. Show Information\n"
+                     << "2. Set Status\n"
+                     << "3. Search Supporter\n";
+                cout << "Enter ur choice";
+                cin >> choice;
+                // loop through all member in list
+                if (choice == 1)
                 {
-                    int choice; // get choice from user
-                    cout << "This is your menu:\n"
-                         << "0. Exit\n"
-                         << "1. Show Information\n"
-                         << "2. Set Status\n"
-                         << "3. Search Supporter\n";
-                    cout << "Enter ur choice";
-                    cin >> choice;
-                    // loop through all member in list
-                    if (choice == 1)
+                    ListofMember[i].showInfo();
+                    break;
+                }
+                else if (choice == 2)
+                {
+                    if (ListofMember[i].setStatus() == 1)
                     {
-                        listOfMem[i].showInfo();
+                        ListofMember[i].showInfoVip();
                         break;
                     }
-                    else if (choice == 2)
+                    else if (ListofMember[i].setStatus() == 2)
                     {
-                        if (listOfMem[i].setStatus() == 1)
-                        {
-                            listOfMem[i].showInfoVip();
-                            break;
-                        }
-                        else
-                        {
-                            cout << "This Mem was unlisted";
-                            break;
-                        }
-                    }
-                    /*else if (choice == 3)
-                    {
-                        string condition;
-                        cout << "Enter the city: ";
-                        std::getline(cin >> std::ws, condition);
-                        listOfMem[i].search(condition);
-                    }
-                    else
-                    {
-                        cout << "Exit";
+                        cout << "This Mem was unlisted";
                         break;
                     }
-            
+                }
+                else if (choice == 3)
+                {
+                    string condition;
+                    cout << "Enter the city: ";
+                    std::getline(cin >> std::ws, condition);
+                    ListofMember[i].search(condition,ListofMember);
                 }
                 else
                 {
-                    cout << "Please Enter again \n";
+                    cout << "Exit";
+                    break;
                 }
             }
-       */ 
+            else
+            {
+                cout << "Please Enter again \n";
+            }
+        }
     }
+
     else if (choice == 3)
     {
         string AuserName;

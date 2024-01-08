@@ -8,11 +8,14 @@ using std::cout;
 class listofMem
 {
 private:
-    std::vector<Member> listofMember;
+    std::vector<Member>listofMember;
 
 public:
     listofMem();
     void getInforMems();
+    void showInfoMems();
+    bool login();
+    void viewInfo();
     bool blockMem(string &username, int &id);
 };
 #endif

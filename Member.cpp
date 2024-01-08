@@ -1,33 +1,50 @@
 #include <iostream>
-
 #include "Member.h"
 #include <fstream>
 using std::cin;
 using std::cout;
 using std::string;
-Member::Member(string userNameVal="",
-    string passwordVal = "",
-    string idVal = "",
-    string fullNameVal = "",
-    string emailVal = "",
-    int phoneNumberVal = 0,
-    string addressVal = "",
-    int creditPointVal = 0,
-    string skillsInfoVal = "",
-    int hostRatingScoreVal= 0,
-    int comsumingPointVal = 0,
-    bool availabilityVal = false,
-    string reviewVal=""): Guest(string userNameVal,
-    string passwordVal,
-    string idVal,
-    string fullNameVal,
-    string emailVal,
-    int phoneNumberVal,
-    string addressVal ,
-    int creditPointVal,
-    string skillsInfoVal),
-     hostRatingScore(hostRatingScoreVal),comsumingPoint(comsumingPointVal),
-     availability(availabilityVal),review(reviewVal){};
+Member::Member(string userNameVal,
+               string passwordVal,
+               string idVal,
+               string fullNameVal,
+               string emailVal,
+               int phoneNumberVal,
+               string addressVal,
+               int creditPointVal,
+               string skillsInfoVal,
+               int hostRatingScoreVal,
+               int comsumingPointVal,
+               bool availabilityVal,
+               string reviewVal) : // Guest(userNameVal,passwordVal,idVal,fullNameVal,emailVal,phoneNumberVal,addressVal,creditPointVal,skillsInfoVal),
+                                   userName(userNameVal),
+                                   password(passwordVal), id(idVal),
+                                   fullName(fullNameVal),
+                                   email(emailVal),
+                                   phoneNumber(phoneNumberVal),
+                                   address(addressVal),
+                                   creditPoint(creditPointVal),
+                                   skillsInfo(skillsInfoVal),
+                                   hostRatingScore(hostRatingScoreVal),
+                                   comsumingPoint(comsumingPointVal),
+                                   availability(availabilityVal),
+                                   review(reviewVal){};
+
+void Member::showInfo()
+{
+    cout << "Username: " << userName << "\n";
+    cout << "Full name: " << fullName << "\n";
+    cout << "Email: " << email << "\n";
+    cout << "Phone number: " << phoneNumber << "\n";
+    cout << "Address: " << address << "\n";
+    cout << "Skills: " << skillsInfo << "\n";
+    cout << "Credit: " << creditPoint << "\n";
+    cout << "Consuming Point: " << comsumingPoint << "\n";
+    cout << "HostingScore: " << hostRatingScore << "\n";
+    cout << "review: " << review << "\n";
+    cout << endl;
+}
+
 // Get infomation from the file
 /*void Member::getInfo()
 {
@@ -47,21 +64,9 @@ Member::Member(string userNameVal="",
         }
     }
     myfile.close();
-}
-void Member::showInfo()
-{
-    cout << "Username: " << userName << "\n";
-    cout << "Full name: " << fullName << "\n";
-    cout << "Email: " << email << "\n";
-    cout << "Phone number: " << phoneNumber << "\n";
-    cout << "Address: " << address << "\n";
-    cout << "Skills: " << skillsInfo << "\n";
-    cout << "Credit: " << creditPoint << "\n";
-    cout << "Consuming Point: " << comsumingPoint << "\n";
-    cout << "HostingScore: " << hostRatingScore << "\n";
-    cout << "review: " << review << "\n";
-    cout << endl;
-}
+}*/
+
+
 void Member::showInfoVip()
 {
     cout << "Full name: " << this->fullName << "\n";
@@ -73,6 +78,10 @@ void Member::showInfoVip()
     cout << "Consuming Point: " << this->hostRatingScore << "\n";
     cout << endl;
 }
+
+
+
+
 bool Member::loginMem(string usernameVal, string passwordVal)
 {
     if (userName == usernameVal && password == passwordVal) // Check username and password
@@ -96,6 +105,10 @@ bool Member::loginMem(string usernameVal, string passwordVal)
         return false;
     }
 };
+
+
+
+
 int Member::setStatus()
 {
     int choice;
@@ -108,45 +121,51 @@ int Member::setStatus()
     {
         availability == true;
         fstream myfile;
-        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
-        myfile << " " << userName << " " << fullName << " " << email << " "
-               << phoneNumber << " " << address << " " << skillsInfo << " "  << "\n"; // save data to file
+        myfile.open("supporters.dat", std::ios::out); // open a file
+        if (!myfile)
+        {
+            cout << " Fail to open/create a file\n";
+        }
+
+        myfile << userName << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << "\n";
         myfile.close();
-         cout << "You are a suporter. Ready to be booked\n";
+        cout << "You are ready to be booked\n";
         return 1;
     }
     else if (choice == 2)
     {
         availability == false;
-        fstream myfile;
-        myfile.open("supporters.dat",std::ios::in); // open a file
-        myfile >> userName >> fullName  >> email
-               >> phoneNumber >> address  >> skillsInfo; // save data to file
-        myfile.close();
-        cout << "dont distrup\n";
+        cout << "do not disrupt";
         return 2;
     }
     else
     {
-        cout << "invalid value";
+        cout << "Invalid value";
         return -1;
     }
 };
-/*void Member::search(string &condition, vector<Member>listMem){
+void Member::search(string &condition, vector<Member> listMem)
+{
     for (int i = 0; i < listMem.size(); i++)
     {
         if (listMem[i].address == condition)
         {
-            cout<<"Around you: \n";
+            cout << "Around you: \n";
             listMem[i].showInfo();
         }
-
     }
+}
 
-}*/
-
-// bool Member::blockMember(Member &mem){
-//     int id;
-//     string userName;
-
-// }*/
+bool Member::blockMember(Member &mem)
+{
+    string id;
+    std::getline(cin >> std::ws, id);
+    cin>>id;
+    string userName;
+    std::getline(cin >> std::ws, userName);
+    if (userName == mem.userName && id == mem.id)
+    {
+        
+    }
+    
+}

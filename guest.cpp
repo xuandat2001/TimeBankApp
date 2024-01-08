@@ -61,7 +61,7 @@ using std::cout;
         cin >> address;
         cout << "\nEnter your skills: ";
         cin >> skillsInfo;
-        creditPoint += 20;
+        creditPoint = 20;
 
         myfile.open("pwd.dat", std::ios::app | std::ios::out); //open a file
         myfile << password << " " << memID << " " << userName << " " << fullName << " " << email << " " 
