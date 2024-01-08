@@ -7,11 +7,25 @@
 using std::cin;
 using std::cout;
 
-class Supporter{
+class Supporter:private Member{
 private: 
     std::vector<RatingScore>HostScore;
 public:
-    Supporter();
-    bool rateMember(Member &mem);
+    Supporter(string userNameVal = "",
+           string passwordVal = "",
+           string idVal = "",
+           string fullNameVal = "",
+           string emailVal = "",
+           int phoneNumberVal = 0,
+           string addressVal = "",
+           int creditPointVal = 0,
+           string skillsInfoVal = "",
+           int hostRatingScoreVal = 0,
+           int comsumingPointVal = 0,
+           bool availabilityVal = false,
+           string reviewVal = "",
+           std::vector<RatingScore>HostScoreVal={});
+    friend class Member;
+   // bool rateMember(Member &mem);
 }; 
 #endif

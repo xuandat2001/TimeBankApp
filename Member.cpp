@@ -66,7 +66,6 @@ void Member::showInfo()
     myfile.close();
 }*/
 
-
 void Member::showInfoVip()
 {
     cout << "Full name: " << this->fullName << "\n";
@@ -78,9 +77,6 @@ void Member::showInfoVip()
     cout << "Consuming Point: " << this->hostRatingScore << "\n";
     cout << endl;
 }
-
-
-
 
 bool Member::loginMem(string usernameVal, string passwordVal)
 {
@@ -105,9 +101,6 @@ bool Member::loginMem(string usernameVal, string passwordVal)
         return false;
     }
 };
-
-
-
 
 int Member::setStatus()
 {
@@ -155,17 +148,45 @@ void Member::search(string &condition, vector<Member> listMem)
         }
     }
 }
-
+bool Member::sendRequest(Supporter &sup)
+{
+    string userNameSup;
+    cout << "Enter the usernam of supporter: ";
+    std::getline(cin >> std::ws, userNameSup);
+    if (userNameSup == sup.userName)
+    {
+        string title;
+        string description
+        cout<< "Enter the title of Request";
+        std::getline(cin >> std::ws, title);
+        cout << "Enter the title of Request";
+        std::getline(cin >> std::ws, title);
+        std::fstream myFile;
+        myFile.open("Request.dat", std::ios::app | std::ios::out);
+        if (!myFile)
+        {
+            cout << "Fail to open or create file";
+        }
+        myFile << userNameSup << " " << title << " " << description << "\n";
+        myFile.close();
+        return true;
+    }
+    else
+    {
+        cout << "could not find the username";
+        return false;
+    }
+}
 bool Member::blockMember(Member &mem)
 {
     string id;
     std::getline(cin >> std::ws, id);
-    cin>>id;
+    cin >> id;
     string userName;
     std::getline(cin >> std::ws, userName);
     if (userName == mem.userName && id == mem.id)
     {
-        
+        return true;
     }
-    
+    return false;
 }

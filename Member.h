@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "guest.h"
+#include"supporter.h"
 using std::cin;
 using std::cout;
 using std::string;
@@ -46,6 +47,8 @@ public:
     // friend class Supporter{};
     void search(string &condition,vector<Member>listMem);
     friend class listofMem;
+    bool sendRequest( Supporter &sup);
     bool blockMember(Member &Mem);
+
 };
 #endif

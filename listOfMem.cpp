@@ -121,7 +121,7 @@ bool listofMem::login()
     return 1;
 };
 /*bool listofMem::blockMem(string &username, int &id){
-
+    
        cout << "Enter your member u wanna to block: ";
        std::getline(cin >> std::ws, username);
        cout << "Enter their Id: ";
