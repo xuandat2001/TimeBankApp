@@ -4,6 +4,8 @@
 using std::cin;
 using std::cout;
 using std::string;
+
+//all definations
 Member::Member(string userNameVal,
                string passwordVal,
                string idVal,
@@ -30,7 +32,7 @@ Member::Member(string userNameVal,
                                    availability(availabilityVal),
                                    review(reviewVal){};
 
-void Member::showInfo()
+void Member::showInfo() // Show Info of each member
 {
     cout << "Username: " << userName << "\n";
     cout << "Full name: " << fullName << "\n";
@@ -66,7 +68,7 @@ void Member::showInfo()
     myfile.close();
 }*/
 
-void Member::showInfoVip()
+void Member::showInfoVip() //ignore it
 {
     cout << "Full name: " << this->fullName << "\n";
     cout << "Email: " << this->email << "\n";
@@ -78,6 +80,9 @@ void Member::showInfoVip()
     cout << endl;
 }
 
+
+
+//Login function
 bool Member::loginMem(string usernameVal, string passwordVal)
 {
     if (userName == usernameVal && password == passwordVal) // Check username and password
@@ -85,23 +90,26 @@ bool Member::loginMem(string usernameVal, string passwordVal)
         cout << "Login successfully\n";
         return true;
     }
-    else if (userName == usernameVal && password != passwordVal)
+    else if (userName == usernameVal && password != passwordVal) //other cases
     {
         cout << "Your password is not correct\n";
         return false;
     }
-    else if (userName != usernameVal && password == passwordVal)
+    else if (userName != usernameVal && password == passwordVal)//other cases
     {
         cout << "Your username is not correct\n";
         return false;
     }
-    else
+    else //other cases
     {
         cout << "Your username and password are not correct\n";
         return false;
     }
 };
 
+
+
+//set avalablyty of each member
 int Member::setStatus()
 {
     int choice;
@@ -112,22 +120,21 @@ int Member::setStatus()
     cin >> choice;
     if (choice == 1)
     {
-        availability == true;
-        fstream myfile;
-        myfile.open("supporters.dat", std::ios::out); // open a file
+        availability == true; //mode on
+        fstream myfile; // create a file to store all the infor of a member as a supporter
+        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
         if (!myfile)
         {
             cout << " Fail to open/create a file\n";
         }
-
-        myfile << userName << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << "\n";
+        myfile << userName << " " << id << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << " " << comsumingPoint << "\n";
         myfile.close();
         cout << "You are ready to be booked\n";
         return 1;
     }
     else if (choice == 2)
     {
-        availability == false;
+        availability == false; //mode off
         cout << "do not disrupt";
         return 2;
     }
@@ -137,46 +144,97 @@ int Member::setStatus()
         return -1;
     }
 };
-void Member::search(string &condition, vector<Member> listMem)
+
+
+
+//search Function
+void Member::search(string &Namecondition, int creditPointCondition, vector<Supporter> listSup)
 {
-    for (int i = 0; i < listMem.size(); i++)
+    for (int i = 0; i < listSup.size(); i++)
     {
-        if (listMem[i].address == condition)
+        if (listSup[i].addressSup == Namecondition && creditPointCondition < listSup[i].creditPointSup)// compare the string input from user
         {
             cout << "Around you: \n";
-            listMem[i].showInfo();
+            listSup[i].showInfoSup();
+        }
+        else
+        {
+            cout << "No one is suitable\n";
         }
     }
 }
-bool Member::sendRequest(Supporter &sup)
+
+
+
+//send Request or Book a supporter
+void Member::sendRequest(std::vector<Supporter> listSup)
 {
     string userNameSup;
-    cout << "Enter the usernam of supporter: ";
+    cout << "Enter the username of supporter: ";
     std::getline(cin >> std::ws, userNameSup);
-    if (userNameSup == sup.userName)
+    for (int i = 0; i < listSup.size(); i++)
     {
-        string title;
-        string description
-        cout<< "Enter the title of Request";
-        std::getline(cin >> std::ws, title);
-        cout << "Enter the title of Request";
-        std::getline(cin >> std::ws, title);
-        std::fstream myFile;
-        myFile.open("Request.dat", std::ios::app | std::ios::out);
-        if (!myFile)
+        if (userNameSup == listSup[i].userNameSup)
         {
-            cout << "Fail to open or create file";
+            string title;
+            string description;
+            cout << "Enter the title of Request";
+            std::getline(cin >> std::ws, title);
+            cout << "Enter the description of Request";
+            std::getline(cin >> std::ws, description);
+            std::fstream myFile;
+            myFile.open("Request.dat", std::ios::app | std::ios::out);
+            if (!myFile)
+            {
+                cout << "Fail to open or create file";
+            }
+            myFile << userName << " " << userNameSup << " " << title << " " << description << "\n";
+            myFile.close();
+            cout << "send request successfully";
+            break;
         }
-        myFile << userNameSup << " " << title << " " << description << "\n";
-        myFile.close();
-        return true;
+        else
+        {
+            cout << "could not find the username";
+        }
+    }
+}
+
+
+//view Request Functionality 
+void Member::viewRequest()
+{
+    string userNameOtherMem, userName,title, description;
+    fstream myFile;
+    myFile.open("Request.dat", std::ios::in);
+
+    if (!myFile)
+    {
+        cout << " No data to be found\n";
     }
     else
     {
-        cout << "could not find the username";
-        return false;
+        while (!myFile.eof())
+        { 
+            myFile >> userNameOtherMem >> userName >> title >> description;
+        }
     }
+    if (userName!=userName)
+    {
+        cout<<"You do not have any request";
+    }
+    else{
+        cout<<"You recieve a request from "<<userNameOtherMem<<"\n"
+        <<"Title: "<<title<<"\n"
+        <<"Description: "<<description;
+    }
+    
+    myFile.close();
 }
+
+
+
+//Block Member (have not completed)
 bool Member::blockMember(Member &mem)
 {
     string id;

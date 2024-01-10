@@ -3,7 +3,7 @@
 #include "Guest.h"
 #include "Admin.h"
 #include "Member.h"
-#include "listOfMem.h"
+#include "supporter.h"
 using namespace std;
 using std::cin;
 using std::cout;
@@ -13,6 +13,7 @@ int main()
 {
     int choice;
     std::vector<Member> ListofMember;
+    std::vector<Supporter> ListofSup;
     Guest Guests;
     Admin admin;
     // ListofMember.push_back(mem.getInfo())
@@ -55,7 +56,7 @@ int main()
     }
     else if (choice == 2)
     {
-
+        //store all the infomation of guest when they register to a member
         string userName;
         string password;
         string id;
@@ -78,16 +79,52 @@ int main()
         }
         else
         {
-            // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; // take data from file and assign to variables
+             
             while (!myfile.eof())
             { // if not at the end of file
                 myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint;
-                Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address, std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review);
-                ListofMember.push_back(mem);
+                Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
+                 std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review);// take data from file and assign to variables
+                ListofMember.push_back(mem); //push each member to a vector
             }
         }
         myfile.close();
 
+
+
+        //store all member when they turn on supporter mode
+        string userNameSup;
+        string idSup;
+        string fullNameSup;
+        string emailSup;
+        string phoneNumberSup;
+        string addressSup;
+        string creditPointSup;
+        string skillsInfoSup;
+        string comsumingPointSup;
+        string reviewSup = "";
+        std::vector<RatingScore> ratingScoreSup = {};
+        myfile.open("supporters.dat", std::ios::in);
+
+        if (!myfile)
+        {
+            cout << " No data to be found\n";
+        }
+        else
+        {
+            // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; // take data from file and assign to variables
+            while (!myfile.eof())
+            { // if not at the end of file
+                myfile >> userNameSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup;
+                Supporter singleSupporter(userNameSup, idSup, fullNameSup, emailSup, std::stod(phoneNumberSup),
+                                          addressSup, std::stod(creditPointSup), skillsInfoSup, std::stod(comsumingPointSup), reviewSup, ratingScoreSup);
+                ListofSup.push_back(singleSupporter);
+            }
+        }
+        myfile.close();
+
+
+        //login section
         string userNameVal;
         string passwordVal;
         cout << "Enter your username: ";
@@ -104,40 +141,57 @@ int main()
                      << "0. Exit\n"
                      << "1. Show Information\n"
                      << "2. Set Status\n"
-                     << "3. Search Supporter\n";
+                     << "3. Search Supporter\n"
+                     << "4. Send Request\n"
+                     << "5. View Request\n";
                 cout << "Enter ur choice";
                 cin >> choice;
                 // loop through all member in list
                 if (choice == 1)
                 {
-                    ListofMember[i].showInfo();
+                    ListofMember[i].showInfo(); //call function
                     break;
                 }
                 else if (choice == 2)
                 {
-                    if (ListofMember[i].setStatus() == 1)
+                    if (ListofMember[i].setStatus() == 1) //call function
                     {
-                        ListofMember[i].showInfoVip();
+                        ListofMember[i].showInfoVip();//call function
                         break;
                     }
-                    else if (ListofMember[i].setStatus() == 2)
+                    else if (ListofMember[i].setStatus() == 2)//call function
                     {
                         cout << "This Mem was unlisted";
                         break;
                     }
                 }
+
                 else if (choice == 3)
                 {
                     string condition;
+                    int creditPoint;
+                    // int hostscore;
                     cout << "Enter the city: ";
                     std::getline(cin >> std::ws, condition);
-                    ListofMember[i].search(condition,ListofMember);
+                    cout << "Enter the credit requirement: ";
+                    cin >> creditPoint;
+                    // cout << "Enter the hosting score requirement: ";
+                    // cin >> hostRatingScore;
+                    ListofMember[i].search(condition, creditPoint, ListofSup);//call function
+                }
+                else if (choice == 4)
+                {
+                    ListofMember[i].sendRequest(ListofSup);//call function
+                }
+                else if (choice == 5)
+                {
+                    ListofMember[i].viewRequest();//call function
                 }
                 else
                 {
                     cout << "Exit";
-                    break;
                 }
+                break;
             }
             else
             {

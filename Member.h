@@ -1,9 +1,13 @@
 #ifndef _MEMBER_H
 #define _MEMBER_H
+
 #include <iostream>
+
 #include <vector>
 #include "guest.h"
-#include"supporter.h"
+#include "supporter.h"
+
+//#include "sendrequest.h"
 using std::cin;
 using std::cout;
 using std::string;
@@ -25,6 +29,8 @@ private:
     string review;
 
 public:
+
+//all declarations
     Member(string userNameVal = "",
            string passwordVal = "",
            string idVal = "",
@@ -44,10 +50,9 @@ public:
     void showInfoVip();
     bool loginMem(string usernameVal, string passwordVal);
     int setStatus();
-    // friend class Supporter{};
-    void search(string &condition,vector<Member>listMem);
-    friend class listofMem;
-    bool sendRequest( Supporter &sup);
+    void search(string &condition, int creditPointCondition, vector<Supporter> listSup);
+    void sendRequest( std::vector<Supporter>listSup);
+    void viewRequest();
     bool blockMember(Member &Mem);
 
 };
