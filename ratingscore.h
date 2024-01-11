@@ -1,4 +1,5 @@
 #include<iostream>
+
 using std::cin;
 using std::cout;
 
@@ -8,5 +9,8 @@ private:
     int supporterRatingScore;
 public:
     RatingScore();
-    int showScore();
+    int getSkillScore();
+    int getSupporterScore();
+    void showScore();
+    void showAveScore();
 };

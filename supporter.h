@@ -4,11 +4,12 @@
 #include<iostream>
 #include<vector>
 #include "ratingscore.h"
-
+//#include "Member.h"
 //#include "sendrequest.h"
 using std::cin;
 using std::cout;
 using std::string;
+class Member;
 class Supporter{
 private: 
     string userNameSup;
@@ -20,7 +21,7 @@ private:
     int creditPointSup;
     string skillsInfoSup;
     int comsumingPointSup;
-    string reviewSup;
+    std::vector<string>reviewSup;
     std::vector<RatingScore>ratingScoreSup;
 public:
     //all declarations
@@ -33,10 +34,13 @@ public:
            int creditPointVal = 0,
            string skillsInfoVal = "",
            int comsumingPointVal = 0,
-           string reviewVal = "",
+           std::vector<string>reviewVal={},
            std::vector<RatingScore>ratingScoreVal={});
            void showInfoSup();
+           RatingScore getRatingScore();
+           void rateMember(Member &host);
            friend class Member;
+           
     //friend void sendRequest(string userNameSup);
    // bool rateMember(Member &mem);
 }; 

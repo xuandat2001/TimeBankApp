@@ -4,6 +4,7 @@
 #include "Admin.h"
 #include "Member.h"
 #include "supporter.h"
+#include "request.h"
 using namespace std;
 using std::cin;
 using std::cout;
@@ -14,6 +15,7 @@ int main()
     int choice;
     std::vector<Member> ListofMember;
     std::vector<Supporter> ListofSup;
+    std::vector<Request> ListofReq;
     Guest Guests;
     Admin admin;
     // ListofMember.push_back(mem.getInfo())
@@ -56,7 +58,7 @@ int main()
     }
     else if (choice == 2)
     {
-        //store all the infomation of guest when they register to a member
+        // store all the infomation of guest when they register to a member
         string userName;
         string password;
         string id;
@@ -66,7 +68,7 @@ int main()
         string address;
         string creditPoint;
         string skillsInfo;
-        int hostRatingScore = 0;
+        std::vector<int> hostRatingScore = {};
         int comsumingPoint = 0;
         bool availability = false;
         string review;
@@ -79,20 +81,18 @@ int main()
         }
         else
         {
-             
+
             while (!myfile.eof())
             { // if not at the end of file
                 myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint;
                 Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
-                 std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review);// take data from file and assign to variables
-                ListofMember.push_back(mem); //push each member to a vector
+                           std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review); // take data from file and assign to variables
+                ListofMember.push_back(mem);                                                                           // push each member to a vector
             }
         }
         myfile.close();
 
-
-
-        //store all member when they turn on supporter mode
+        // store all member when they turn on supporter mode
         string userNameSup;
         string idSup;
         string fullNameSup;
@@ -102,7 +102,7 @@ int main()
         string creditPointSup;
         string skillsInfoSup;
         string comsumingPointSup;
-        string reviewSup = "";
+        std::vector<string> reviewSup = {};
         std::vector<RatingScore> ratingScoreSup = {};
         myfile.open("supporters.dat", std::ios::in);
 
@@ -123,8 +123,31 @@ int main()
         }
         myfile.close();
 
+        // store all request
+        string hostName;
+        string supName;
+        string title;
+        string description;
+        string status = "";
+        fstream myFile;
+        myFile.open("Request.dat", std::ios::in);
 
-        //login section
+        if (!myFile)
+        {
+            cout << " No data to be found\n";
+        }
+        else
+        {
+            while (!myFile.eof())
+            {
+                myFile >> hostName >> supName >> title >> description;
+            }
+            Request req(hostName, supName, title, description, status);
+            ListofReq.push_back(req);
+        }
+        myFile.close();
+
+        // login section
         string userNameVal;
         string passwordVal;
         cout << "Enter your username: ";
@@ -143,23 +166,24 @@ int main()
                      << "2. Set Status\n"
                      << "3. Search Supporter\n"
                      << "4. Send Request\n"
-                     << "5. View Request\n";
+                     << "5. View Request\n"
+                     << "6. Check your Request\n";
                 cout << "Enter ur choice";
                 cin >> choice;
                 // loop through all member in list
                 if (choice == 1)
                 {
-                    ListofMember[i].showInfo(); //call function
+                    ListofMember[i].showInfo(); // call function
                     break;
                 }
                 else if (choice == 2)
                 {
-                    if (ListofMember[i].setStatus() == 1) //call function
+                    if (ListofMember[i].setStatus() == 1) // call function
                     {
-                        ListofMember[i].showInfoVip();//call function
+                        ListofMember[i].showInfoVip(); // call function
                         break;
                     }
-                    else if (ListofMember[i].setStatus() == 2)//call function
+                    else if (ListofMember[i].setStatus() == 2) // call function
                     {
                         cout << "This Mem was unlisted";
                         break;
@@ -177,15 +201,35 @@ int main()
                     cin >> creditPoint;
                     // cout << "Enter the hosting score requirement: ";
                     // cin >> hostRatingScore;
-                    ListofMember[i].search(condition, creditPoint, ListofSup);//call function
+                    ListofMember[i].search(condition, creditPoint, ListofSup); // call function
                 }
                 else if (choice == 4)
                 {
-                    ListofMember[i].sendRequest(ListofSup);//call function
+                    ListofMember[i].sendRequest(ListofSup); // call function
                 }
                 else if (choice == 5)
                 {
-                    ListofMember[i].viewRequest();//call function
+                    for (int i = 0; i < ListofReq.size(); i++)
+                    {
+                        if (ListofMember[i].viewRequest(ListofReq[i]) == false)
+                         // call function
+                        {
+                            ListofMember[i].interactRequest(ListofReq[i]);
+                            if (ListofMember[i].interactRequest(ListofReq[i]) == 1)
+                            {
+                                 ListofMember[i].rateMember(ListofMember[i]);
+                            }
+                            break;
+                            
+                        }
+                        else{
+                            cout<<"You dont have any request";
+                        }
+                    }
+                }
+                else if (choice == 6)
+                {
+                    ListofMember[i].checkStatusRequest();
                 }
                 else
                 {

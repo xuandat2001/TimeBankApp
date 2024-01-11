@@ -6,14 +6,16 @@ using std::cout;
 using std::string;
 class Request{
 private:
-    int id;
+    string nameOfHost;
     string nameofSupport;
     string title;
     string description;
+    string status;
 public:
-    Request(int idVal = 0, string nameofSupportVal= "" ,string titleVal = "", string descriptionVal="");
+    Request(string nameofHostVal, string nameofSupportVal ,string titleVal, string descriptionVal,string statusVal);
     //void saveData();
     void showRequest();
+    friend class Member;
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include <vector>
 #include "guest.h"
 #include "supporter.h"
+#include "request.h"
 
 //#include "sendrequest.h"
 using std::cin;
@@ -23,7 +24,7 @@ private:
     string address;
     int creditPoint;
     string skillsInfo;
-    int hostRatingScore;
+    std::vector<int>hostRatingScore;
     int comsumingPoint;
     bool availability;
     string review;
@@ -40,7 +41,7 @@ public:
            string addressVal = "",
            int creditPointVal = 0,
            string skillsInfoVal = "",
-           int hostRatingScoreVal = 0,
+           std::vector<int>hostRatingScoreVal={},
            int comsumingPointVal = 0,
            bool availabilityVal = false,
            string reviewVal = "");
@@ -52,8 +53,12 @@ public:
     int setStatus();
     void search(string &condition, int creditPointCondition, vector<Supporter> listSup);
     void sendRequest( std::vector<Supporter>listSup);
-    void viewRequest();
+    bool viewRequest(Request &req);
+    int interactRequest(Request &req);
+    bool checkStatusRequest();
+    bool viewSpecificMem(Member &mem);
     bool blockMember(Member &Mem);
-
+    void rateSupport(Supporter &sup);
+    void rateMember(Member &host);
 };
 #endif

@@ -4,16 +4,14 @@
 using std::cin;
 using std::cout;
 using std::string;
-Request::Request(int idVal, string nameofSupportVal,string titleVal, string descriptionVal){
+Request::Request(string nameofHostVal= "", string nameofSupportVal= "" ,string titleVal = "", string descriptionVal="",string statusVal=""){
 
-    this->id = idVal;
+    this->nameOfHost= nameofHostVal;
     this->nameofSupport= nameofSupportVal;
     this->title = titleVal;
     this->description = descriptionVal;
+    this->status = statusVal;
 };
 
 void Request::showRequest(){
-    cout<<"RequestIndex: "<<id<<"\n";
-    cout<<"RequestTitle: "<<title<<"\n";
-    cout<<"RequestDescription: "<<description<<"\n";
 }
