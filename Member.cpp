@@ -51,28 +51,6 @@ void Member::showInfo() // Show Info of each member
     cout << "review: " << review << "\n";
     cout << endl;
 }
-
-// Get infomation from the file
-/*void Member::getInfo()
-{
-    fstream myfile;
-    myfile.open("pwd.dat", std::ios::in);
-
-    if (!myfile)
-    {
-        cout << " No data to be found\n";
-    }
-    else
-    {
-        myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; // take data from file and assign to variables
-        while (!myfile.eof())
-        { // if not at the end of file
-            myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint;
-        }
-    }
-    myfile.close();
-}*/
-
 void Member::showInfoVip() // ignore it
 {
     cout << "Full name: " << this->fullName << "\n";
