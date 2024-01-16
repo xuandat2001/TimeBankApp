@@ -27,276 +27,291 @@ int main()
          << "sXXXXXXX, Student Name\n"
          << "sXXXXXXX, Student Name\n"
          << "sXXXXXXX, Student Name\n"
-         << "Use the app as 1. Guest 2. Member 3. Admin\n"
-         << "Enter your choice: ";
-
-    cin >> choice;
-
-    if (choice == 1)
+         << "\n\nWELLCOME TO TIME BANK APP\n";
+    while (1)
     {
-        cout << "This is your menu:\n"
-             << "0. Exit\n"
-             << "1. Register for a Member account\n"
-             << "2. View supporters' details\n";
-        int choice1;
-        cout << "Enter your choice: ";
-        cin >> choice1;
 
-        if (choice1 == 1)
-        {
-            Guests.registerMember();
-        }
+        cout << "\nUse the app as      1. Guest 2. Member 3. Admin 4. Exit\n"
+             << "Enter your choice: ";
 
-        else if (choice1 == 2)
-        {
-            Guests.viewSupporters();
-        }
-        else
-        {
-            cout << "Invalid choice. Please choose 0, 1 or 2\n";
-        }
-    }
-    else if (choice == 2)
-    {
-        // store all the infomation of guest when they register to a member
-        string userName;
-        string password;
-        string id;
-        string fullName;
-        string email;
-        string phoneNumber;
-        string address;
-        string creditPoint;
-        string skillsInfo;
-        std::vector<int> hostRatingScore = {};
-        int comsumingPoint = 0;
-        bool availability = false;
-        string review;
-        fstream myfile;
-        myfile.open("pwd.dat", std::ios::in);
+        cin >> choice;
 
-        if (!myfile)
+        if (choice == 1)
         {
-            cout << " No data to be found\n";
+            cout << "This is your menu:\n"
+                 << "0. Exit\n"
+                 << "1. Register for a Member account\n"
+                 << "2. View supporters' details\n";
+            int choice1;
+            cout << "Enter your choice: ";
+            cin >> choice1;
+
+            if (choice1 == 1)
+            {
+                Guests.registerMember();
+            }
+
+            else if (choice1 == 2)
+            {
+                Guests.viewSupporters();
+            }
+            else
+            {
+                cout << "Invalid choice. Please choose 0, 1 or 2\n";
+            }
         }
-        else
+        else if (choice == 2)
         {
+            // store all the infomation of guest when they register to a member
+            string userName;
+            string password;
+            string id;
+            string fullName;
+            string email;
+            string phoneNumber;
+            string address;
+            string creditPoint;
+            string skillsInfo;
+            std::vector<int> hostRatingScore = {};
+            int comsumingPoint = 0;
+            bool availability = false;
+            string review;
+            fstream myfile;
+            myfile.open("pwd.dat", std::ios::in);
 
             while (!myfile.eof())
             { // if not at the end of file
                 myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint;
                 Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
-                           std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability, review); // take data from file and assign to variables
-                ListofMember.push_back(mem);                                                                           // push each member to a vector
+                           std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability); // take data from file and assign to variables
+                ListofMember.push_back(mem);                                                                   // push each member to a vector
             }
-        }
-        myfile.close();
 
-        // store all member when they turn on supporter mode
-        string userNameSup;
-        string idSup;
-        string fullNameSup;
-        string emailSup;
-        string phoneNumberSup;
-        string addressSup;
-        string creditPointSup;
-        string skillsInfoSup;
-        string comsumingPointSup;
-        std::vector<string> reviewSup = {};
-        std::vector<RatingScore> ratingScoreSup = {};
-        myfile.open("supporters.dat", std::ios::in);
+            myfile.close();
 
-        if (!myfile)
-        {
-            cout << " No data to be found\n";
-        }
-        else
-        {
-            // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; // take data from file and assign to variables
-            while (!myfile.eof())
-            { // if not at the end of file
-                myfile >> userNameSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup;
-                Supporter singleSupporter(userNameSup, idSup, fullNameSup, emailSup, std::stod(phoneNumberSup),
-                                          addressSup, std::stod(creditPointSup), skillsInfoSup, std::stod(comsumingPointSup), reviewSup, ratingScoreSup);
+            // store all member when they turn on supporter mode
+
+            std::string userNameSup;
+            std::string passwordSup; // Assuming you read the password from the file
+            std::string idSup;
+            std::string fullNameSup;
+            std::string emailSup;
+            double phoneNumberSup;
+            std::string addressSup;
+            double creditPointSup;
+            std::string skillsInfoSup;
+            std::vector<int> hostRatingScoreVal = {};
+            double comsumingPointSup;
+            bool availabilityVal;
+            std::vector<std::string> reviewSup = {};
+            std::vector<RatingScore> ratingScoreSup = {};
+
+            while (myfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal)
+            {
+                // Create a Member object
+                Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
+
+                // Create a Supporter object and add it to the list
+                Supporter singleSupporter(baseMember, reviewSup, ratingScoreSup);
                 ListofSup.push_back(singleSupporter);
             }
-        }
-        myfile.close();
 
-        // store all request
-        string hostName;
-        string supName;
-        string title;
-        string description;
-        string status = "";
-        fstream myFile;
-        myFile.open("Request.dat", std::ios::in);
+            myfile.close();
 
-        if (!myFile)
-        {
-            cout << " No data to be found\n";
-        }
-        else
-        {
-            while (!myFile.eof())
+            // store all request
+            string hostName;
+            string supName;
+            string title;
+            string description;
+            string status = "";
+            fstream myFile;
+            myFile.open("Request.dat", std::ios::in);
+
+            if (!myFile)
             {
-                myFile >> hostName >> supName >> title >> description;
+                cout << " No data to be found\n";
             }
-            Request req(hostName, supName, title, description, status);
-            ListofReq.push_back(req);
-        }
-        myFile.close();
-
-        // login section
-        string userNameVal;
-        string passwordVal;
-        cout << "Enter your username: ";
-        std::getline(cin >> std::ws, userNameVal); // getusername
-        cout << "Enter your Password: ";
-        std::getline(cin >> std::ws, passwordVal); // get password
-
-        for (int i = 0; i < ListofMember.size(); i++)
-        {
-            if (ListofMember[i].loginMem(userNameVal, passwordVal) == true)
+            else
             {
-                int choice; // get choice from user
-                cout << "This is your menu:\n"
-                     << "0. Exit\n"
-                     << "1. Show Information\n"
-                     << "2. Set Status\n"
-                     << "3. Search Supporter\n"
-                     << "4. Send Request\n"
-                     << "5. View Request\n"
-                     << "6. Check your Request\n";
-                cout << "Enter ur choice";
+                while (!myFile.eof())
+                {
+                    myFile >> hostName >> supName >> title >> description;
+                }
+                Request req(hostName, supName, title, description, status);
+                ListofReq.push_back(req);
+            }
+            myFile.close();
+
+            // login section
+            while (1)
+            {
+                cout << "1. Login  2. Return to the Main Menu \n ";
+                int choice;
+                cout << "Enter your choice: ";
                 cin >> choice;
-                // loop through all member in list
+
                 if (choice == 1)
                 {
-                    ListofMember[i].showInfo(); // call function
-                    break;
+
+                    string userNameVal;
+                    string passwordVal;
+                    cout << "Enter your username: ";
+                    std::getline(cin >> std::ws, userNameVal); // getusername
+                    cout << "Enter your Password: ";
+                    std::getline(cin >> std::ws, passwordVal); // get password
+
+                    for (int i = 0; i < ListofMember.size(); i++)
+                    {
+
+                        if (ListofMember[i].loginMem(ListofMember, userNameVal, passwordVal) == 1)
+                        {
+                            while (1)
+                            {
+                                int choice; // get choice from user
+                                cout << "This is your menu:\n"
+                                     << "0. Exit\n"
+                                     << "1. Show Information\n"
+                                     << "2. Set Status\n"
+                                     << "3. Search Supporter\n"
+                                     << "4. Send Request\n"
+                                     << "5. View Request\n"
+                                     << "6. Check your Request\n";
+                                cout << "Enter your choice: ";
+                                cin >> choice;
+                                // loop through all member in list
+                                if (choice == 1)
+                                {
+                                    ListofMember[i].showInfo(); // call function
+                                }
+                                else if (choice == 2)
+                                {
+                                    ListofMember[i].setStatus();
+                                }
+
+                                else if (choice == 3)
+                                {
+                                    string condition;
+                                    int creditPoint;
+                                    // int hostscore;
+                                    cout << "Enter the city: ";
+                                    std::getline(cin >> std::ws, condition);
+                                    cout << "Enter the credit requirement: ";
+                                    cin >> creditPoint;
+                                    // cout << "Enter the hosting score requirement: ";
+                                    // cin >> hostRatingScore;
+                                    ListofMember[i].search(condition, creditPoint, ListofSup); // call function
+                                }
+                                else if (choice == 4)
+                                {
+                                    ListofMember[i].sendRequest(ListofSup); // call function
+                                }
+                                else if (choice == 5)
+                                {
+                                    for (int i = 0; i < ListofReq.size(); i++)
+                                    {
+                                        if (ListofMember[i].viewRequest(ListofReq[i]) == false)
+                                        // call function
+                                        {
+                                            ListofMember[i].interactRequest(ListofReq[i]);
+                                            if (ListofMember[i].interactRequest(ListofReq[i]) == 1)
+                                            {
+                                                ListofMember[i].rateMember(ListofMember[i]);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            cout << "You dont have any request";
+                                        }
+                                    }
+                                }
+                                else if (choice == 6)
+                                {
+                                    ListofMember[i].checkStatusRequest();
+                                }
+                                else if (choice == 0)
+                                {
+                                    cout << "\nExit. Return to the Login Section!\n";
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "\nInvalid value, Please follow the guide above";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cout << "Login Unsucessfully! Please do it again\n";
+                        }
+                        break;
+                    }
                 }
                 else if (choice == 2)
                 {
-                    if (ListofMember[i].setStatus() == 1) // call function
-                    {
-                        ListofMember[i].showInfoVip(); // call function
-                        break;
-                    }
-                    else if (ListofMember[i].setStatus() == 2) // call function
-                    {
-                        cout << "This Mem was unlisted";
-                        break;
-                    }
+                    break;
                 }
-
-                else if (choice == 3)
-                {
-                    string condition;
-                    int creditPoint;
-                    // int hostscore;
-                    cout << "Enter the city: ";
-                    std::getline(cin >> std::ws, condition);
-                    cout << "Enter the credit requirement: ";
-                    cin >> creditPoint;
-                    // cout << "Enter the hosting score requirement: ";
-                    // cin >> hostRatingScore;
-                    ListofMember[i].search(condition, creditPoint, ListofSup); // call function
-                }
-                else if (choice == 4)
-                {
-                    ListofMember[i].sendRequest(ListofSup); // call function
-                }
-                else if (choice == 5)
-                {
-                    for (int i = 0; i < ListofReq.size(); i++)
-                    {
-                        if (ListofMember[i].viewRequest(ListofReq[i]) == false)
-                         // call function
-                        {
-                            ListofMember[i].interactRequest(ListofReq[i]);
-                            if (ListofMember[i].interactRequest(ListofReq[i]) == 1)
-                            {
-                                 ListofMember[i].rateMember(ListofMember[i]);
-                            }
-                            break;
-                            
-                        }
-                        else{
-                            cout<<"You dont have any request";
-                        }
-                    }
-                }
-                else if (choice == 6)
-                {
-                    ListofMember[i].checkStatusRequest();
-                }
-                else
-                {
-                    cout << "Exit";
-                }
-                break;
-            }
-            else
-            {
-                cout << "Please Enter again \n";
             }
         }
-    }
 
-    else if (choice == 3)
-    {
-        string AuserName;
-        string Apassword;
-        cout << "Enter your Username: ";
-        cin >> AuserName;
-        cout << "Enter your password: ";
-        cin >> Apassword;
-
-        string Auname = admin.getAuserName();
-        string Apword = admin.getApassword();
-        if (AuserName == Auname)
+        else if (choice == 3)
         {
-            if (Apassword == Apword)
-            {
-                cout << "Sign in successfully \n";
+            string AuserName;
+            string Apassword;
+            cout << "Enter your Username: ";
+            cin >> AuserName;
+            cout << "Enter your password: ";
+            cin >> Apassword;
 
-                /*int memNumber;
-                int memNum = Guests.getMemNum();
-                cout << "Which member's password to change? \n" << "Input member number: ";
-                cin >> memNumber;
-                if (memNumber == memNum){
-                    admin.modifyPassword();
-                } else {
-                    cout << "Member may not exist. Please enter again. \n";
-                }*/
-                int choice2;
-                cout << "This is your menu:\n"
-                     << "0. Exit\n"
-                     << "1. Modify member's password\n";
-                cin >> choice2;
-                if (choice2 == 1)
+            string Auname = admin.getAuserName();
+            string Apword = admin.getApassword();
+            if (AuserName == Auname)
+            {
+                if (Apassword == Apword)
                 {
-                    admin.modifyPassword();
+                    cout << "Sign in successfully \n";
+
+                    /*int memNumber;
+                    int memNum = Guests.getMemNum();
+                    cout << "Which member's password to change? \n" << "Input member number: ";
+                    cin >> memNumber;
+                    if (memNumber == memNum){
+                        admin.modifyPassword();
+                    } else {
+                        cout << "Member may not exist. Please enter again. \n";
+                    }*/
+                    int choice2;
+                    cout << "This is your menu:\n"
+                         << "0. Exit\n"
+                         << "1. Modify member's password\n";
+                    cin >> choice2;
+                    if (choice2 == 1)
+                    {
+                        admin.modifyPassword();
+                    }
+                    else
+                    {
+                        cout << "Invalid choice. Please select 0 or 1. \n";
+                    }
                 }
                 else
                 {
-                    cout << "Invalid choice. Please select 0 or 1. \n";
+                    cout << "Wrong password. Please try again. \n";
                 }
             }
             else
             {
-                cout << "Wrong password. Please try again. \n";
+                cout << "User name or password is incorrect. Please try again. \n";
             }
+        }
+        else if (choice == 4)
+        {
+            cout << "\nEnd of Program. Have a nice day";
+            break;
         }
         else
         {
-            cout << "User name or password is incorrect. Please try again. \n";
+            cout << "Invalid choice. Please choose 1, 2, 3 or 4!\n";
         }
-    }
-    else
-    {
-        cout << "Invalid choice. Please choose 1, 2 or 3\n";
     }
     return 0;
 }

@@ -15,10 +15,9 @@ Member::Member(string userNameVal,
                string addressVal,
                int creditPointVal,
                string skillsInfoVal,
-               std::vector<int>hostRatingScoreVal,
+               std::vector<int> hostRatingScoreVal,
                int comsumingPointVal,
-               bool availabilityVal,
-               string reviewVal) : // Guest(userNameVal,passwordVal,idVal,fullNameVal,emailVal,phoneNumberVal,addressVal,creditPointVal,skillsInfoVal),
+               bool availabilityVal) : // Guest(userNameVal,passwordVal,idVal,fullNameVal,emailVal,phoneNumberVal,addressVal,creditPointVal,skillsInfoVal),
                                    userName(userNameVal),
                                    password(passwordVal), id(idVal),
                                    fullName(fullNameVal),
@@ -29,12 +28,12 @@ Member::Member(string userNameVal,
                                    skillsInfo(skillsInfoVal),
                                    hostRatingScore(hostRatingScoreVal),
                                    comsumingPoint(comsumingPointVal),
-                                   availability(availabilityVal),
-                                   review(reviewVal){};
+                                   availability(availabilityVal)
+                                   {};
 
 void Member::showInfo() // Show Info of each member
 {
-    cout << "Username: " << userName << "\n";
+    cout << "Username: " << this->userName << "\n";
     cout << "Full name: " << fullName << "\n";
     cout << "Email: " << email << "\n";
     cout << "Phone number: " << phoneNumber << "\n";
@@ -42,16 +41,14 @@ void Member::showInfo() // Show Info of each member
     cout << "Skills: " << skillsInfo << "\n";
     cout << "Credit: " << creditPoint << "\n";
     cout << "Consuming Point: " << comsumingPoint << "\n";
-    
+
     for (int i = 0; i < hostRatingScore.size(); i++)
     {
         cout << "HostingScore: " << hostRatingScore[i] << " ";
     }
-    
-    cout << "review: " << review << "\n";
     cout << endl;
 }
-void Member::showInfoVip() // ignore it
+void Member::showInfoVip() 
 {
     cout << "Full name: " << this->fullName << "\n";
     cout << "Email: " << this->email << "\n";
@@ -63,33 +60,24 @@ void Member::showInfoVip() // ignore it
     {
         cout << "HostScore: " << this->hostRatingScore[i] << "\n";
     }
-    
+
     cout << endl;
 }
 
 // Login function
-bool Member::loginMem(string usernameVal, string passwordVal)
+bool Member::loginMem(std::vector<Member> ListofMember, string usernameVal, string passwordVal)
 {
-    if (userName == usernameVal && password == passwordVal) // Check username and password
+    for (int i = 0; i < ListofMember.size(); i++)
     {
-        cout << "Login successfully\n";
-        return true;
+        if (ListofMember[i].userName == usernameVal && ListofMember[i].password == passwordVal) // Check username and password
+        {
+            cout << "Login successfully\n"; 
+            return true;
+        }   
     }
-    else if (userName == usernameVal && password != passwordVal) // other cases
-    {
-        cout << "Your password is not correct\n";
-        return false;
-    }
-    else if (userName != usernameVal && password == passwordVal) // other cases
-    {
-        cout << "Your username is not correct\n";
-        return false;
-    }
-    else // other cases
-    {
-        cout << "Your username and password are not correct\n";
-        return false;
-    }
+    return false;
+    cout<<"Login unsuccessfully. Please enter again";
+    
 };
 
 // set avalablyty of each member
@@ -104,6 +92,8 @@ int Member::setStatus()
     if (choice == 1)
     {
         availability == true;                                         // mode on
+        cout<<"Enter your consuming point: ";
+        cin>> comsumingPoint;
         fstream myfile;                                               // create a file to store all the infor of a member as a supporter
         myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
         if (!myfile)
@@ -129,11 +119,11 @@ int Member::setStatus()
 };
 
 // search Function
-void Member::search(string &Namecondition, int creditPointCondition, vector<Supporter> listSup)
+void Member::search(string cityName, int creditPointCondition, vector<Supporter> listSup)
 {
     for (int i = 0; i < listSup.size(); i++)
     {
-        if (listSup[i].addressSup == Namecondition && creditPointCondition < listSup[i].creditPointSup) // compare the string input from user
+        if (listSup[i].address == cityName && creditPointCondition < listSup[i].creditPoint) // compare the string input from user
         {
             cout << "Around you: \n";
             listSup[i].showInfoSup();
@@ -153,7 +143,7 @@ void Member::sendRequest(std::vector<Supporter> listSup)
     std::getline(cin >> std::ws, userNameSup);
     for (int i = 0; i < listSup.size(); i++)
     {
-        if (userNameSup == listSup[i].userNameSup)
+        if (userNameSup == listSup[i].userName)
         {
             string title;
             string description;
@@ -265,7 +255,8 @@ bool Member::checkStatusRequest()
     }
 }
 
-bool Member::viewSpecificMem(Member &mem){
+void Member::viewSpecificMem(Member &mem)
+{
     cout << "Full name: " << mem.fullName << "\n";
     cout << "Email: " << mem.email << "\n";
     cout << "Phone number: " << mem.phoneNumber << "\n";
@@ -276,7 +267,7 @@ bool Member::viewSpecificMem(Member &mem){
     {
         cout << "HostScore: " << mem.hostRatingScore[i] << "\n";
     }
-    
+
     cout << endl;
 };
 // Block Member (have not completed)
@@ -307,17 +298,17 @@ void rateSupport(Supporter &sup)
     // sup.reviewSup.push_back(comment);
 };
 
-
-//rate Member
-void Member::rateMember(Member &host){
+// rate Member
+void Member::rateMember(Member &host)
+{
     int score;
     string nameOfHost;
-    cout<<"Enter your host: ";
-    std::getline(cin>>std::ws, nameOfHost);
-    cout<<"Enter the score for your host: ";
-    cin>>score;
+    cout << "Enter your host: ";
+    std::getline(cin >> std::ws, nameOfHost);
+    cout << "Enter the score for your host: ";
+    cin >> score;
     if (nameOfHost == host.userName)
     {
         host.hostRatingScore.push_back(score);
-    } 
+    }
 };

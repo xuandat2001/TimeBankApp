@@ -14,7 +14,7 @@ using std::cout;
 using std::string;
 class Member
 {
-private:
+protected:
     string userName;
     string password;
     string id;
@@ -27,7 +27,7 @@ private:
     std::vector<int>hostRatingScore;
     int comsumingPoint;
     bool availability;
-    string review;
+    
 
 public:
 
@@ -43,20 +43,20 @@ public:
            string skillsInfoVal = "",
            std::vector<int>hostRatingScoreVal={},
            int comsumingPointVal = 0,
-           bool availabilityVal = false,
-           string reviewVal = "");
+           bool availabilityVal = false
+           );
 
     void getInfo();
     void showInfo();
     void showInfoVip();
-    bool loginMem(string usernameVal, string passwordVal);
+    bool loginMem(std::vector<Member> ListofMember,string usernameVal, string passwordVal);
     int setStatus();
-    void search(string &condition, int creditPointCondition, vector<Supporter> listSup);
+    void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
     void sendRequest( std::vector<Supporter>listSup);
     bool viewRequest(Request &req);
     int interactRequest(Request &req);
     bool checkStatusRequest();
-    bool viewSpecificMem(Member &mem);
+    void viewSpecificMem(Member &mem);
     bool blockMember(Member &Mem);
     void rateSupport(Supporter &sup);
     void rateMember(Member &host);
