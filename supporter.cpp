@@ -14,32 +14,32 @@ Supporter::Supporter(string userNameVal,
                      string skillsInfoVal,
                      std::vector<int> HostratingScoreVal,
                      int comsumingPointVal,
-                     bool availabilitySup,
+                     bool availabilityVal,
                      std::vector<string> reviewVal,
                      
-                     std::vector<RatingScore> ratingScoreSupVal) : Member(userNameVal,
-                                                                          passwordVal,
-                                                                          idVal,
-                                                                          fullNameVal,
-                                                                          emailVal,
-                                                                          phoneNumberVal,
-                                                                          addressVal,
-                                                                          creditPointVal,
-                                                                          skillsInfoVal,
-                                                                          HostratingScoreVal,
-                                                                          comsumingPointVal,
-                                                                          availabilitySup),
+                     std::vector<RatingScore> ratingScoreSupVal) : userNameSup(userNameVal),
+                                                                          passwordSup(passwordVal),
+                                                                          idSup(idVal),
+                                                                          fullNameSup(fullNameVal),
+                                                                          emailSup(emailVal),
+                                                                          phoneNumberSup(phoneNumberVal),
+                                                                          addressSup(addressVal),
+                                                                          creditPointSup(creditPointVal),
+                                                                          skillsInfoSup(skillsInfoVal),
+                                                                          HostratingScoreSup(HostratingScoreVal),
+                                                                          comsumingPointSup(comsumingPointVal),
+                                                                          availabilitySup(availabilityVal),
                                                                    reviewSup(reviewVal), ratingScoreSup(ratingScoreSupVal){};
 void Supporter::showInfoSup()
 {
-    cout << "Name of Supporter: " << Member::userName << "\n";
-    cout << "FullName of Supporter: " << Member::fullName << "\n";
-    cout << "Email of Supporter: " << Member::email << "\n";
-    cout << "Phone of Supporter: " << Member::phoneNumber << "\n";
-    cout << "Address of Supporter: " << Member::address << "\n";
-    cout << "Credit Point of Supporter: " << Member::creditPoint << "\n";
-    cout << "Skills of Supporter: " << Member::skillsInfo << "\n";
-    cout << "Consuming Point of Supporter: " << Member::comsumingPoint << "\n";
+    cout << "Name of Supporter: " << userNameSup << "\n";
+    cout << "FullName of Supporter: " << fullNameSup << "\n";
+    cout << "Email of Supporter: " << emailSup << "\n";
+    cout << "Phone of Supporter: " << phoneNumberSup << "\n";
+    cout << "Address of Supporter: " << addressSup << "\n";
+    cout << "Credit Point of Supporter: " <<creditPointSup << "\n";
+    cout << "Skills of Supporter: " << skillsInfoSup << "\n";
+    cout << "Consuming Point of Supporter: " << comsumingPointSup << "\n";
     for (int i = 0; i < reviewSup.size(); i++)
     {
         cout << "reviews of Supporter: " << reviewSup[i] << "\n";
@@ -55,7 +55,7 @@ void Supporter::showInfoSup()
 }
 void Supporter::requirementSup()
 {
-    cout << "There is a supporter with consuming point: " << Member::comsumingPoint << "credit points/hour and minimum required host-rating score is 3.";
+    cout << "There is a supporter with consuming point: " << comsumingPointSup << "credit points/hour and minimum required host-rating score is 3.";
 }
 /* void Supporter::rateMember(Member &host)
 {

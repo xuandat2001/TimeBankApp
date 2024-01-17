@@ -7,11 +7,10 @@
 #include "guest.h"
 #include "supporter.h"
 #include "request.h"
-
-//#include "sendrequest.h"
 using std::cin;
 using std::cout;
 using std::string;
+class Supporter;
 class Member
 {
 protected:
@@ -45,14 +44,13 @@ public:
            int comsumingPointVal = 0,
            bool availabilityVal = false
            );
-
     void getInfo();
     void showInfo();
     void showInfoVip();
-    bool loginMem(std::vector<Member> ListofMember,string usernameVal, string passwordVal);
+    bool loginMem(string usernameVal, string passwordVal);
     int setStatus();
-    void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
-    void sendRequest( std::vector<Supporter>listSup);
+    //void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
+    //void sendRequest( std::vector<Supporter>listSup);
     bool viewRequest(Request &req);
     int interactRequest(Request &req);
     bool checkStatusRequest();
@@ -60,5 +58,8 @@ public:
     bool blockMember(Member &Mem);
     void rateSupport(Supporter &sup);
     void rateMember(Member &host);
+    friend bool loginMem( Member &mem);
+    friend void sendRequest(std::vector<Supporter> listSup,Member mem);
+   
 };
 #endif

@@ -1,6 +1,5 @@
 #ifndef SUPPORTER_H
 #define SUPPORTER_H
-
 #include <iostream>
 #include <vector>
 #include "ratingscore.h"
@@ -10,16 +9,27 @@ using std::cin;
 using std::cout;
 using std::string;
 class Member;
-class Supporter : public Member
-{
+class Supporter{
 private:
+    string userNameSup;
+    string passwordSup; 
+    string idSup;
+    string fullNameSup;
+    string emailSup;
+    int phoneNumberSup;
+    string addressSup;
+    int creditPointSup;
+    string skillsInfoSup;
+    std::vector<int> HostratingScoreSup;
+    int comsumingPointSup;
+    bool availabilitySup;
     std::vector<string> reviewSup;
-    std::vector<RatingScore>ratingScoreSup;
+    std::vector<RatingScore> ratingScoreSup;
 
 public:
     // all declarations
     Supporter(string userNameVal = "",
-              string passwordVal="",
+              string passwordVal = "",
               string idVal = "",
               string fullNameVal = "",
               string emailVal = "",
@@ -29,16 +39,17 @@ public:
               string skillsInfoVal = "",
               std::vector<int> HostratingScoreVal = {},
               int comsumingPointVal = 0,
-               bool availabilitySup = false,
+              bool availabilityVal = false,
               std::vector<string> reviewVal = {},
-             
-              std::vector<RatingScore>ratingScoreSupVal={});
+
+              std::vector<RatingScore> ratingScoreSupVal = {});
     void showInfoSup();
     RatingScore getRatingScore();
     void requirementSup();
-    void rateMember(Member &host);
+    //void rateMember(Member &host);
     friend class Member;
-
+    friend void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
+    friend void sendRequest(std::vector<Supporter> listSup, Member mem);
     // friend void sendRequest(string userNameSup);
     // bool rateMember(Member &mem);
 };

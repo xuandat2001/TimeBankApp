@@ -65,16 +65,15 @@ void Member::showInfoVip()
 }
 
 // Login function
-bool Member::loginMem(std::vector<Member> ListofMember, string usernameVal, string passwordVal)
+bool Member::loginMem( string usernameVal, string passwordVal)
 {
-    for (int i = 0; i < ListofMember.size(); i++)
-    {
-        if (ListofMember[i].userName == usernameVal && ListofMember[i].password == passwordVal) // Check username and password
+
+        if (userName == usernameVal && password == passwordVal) // Check username and password
         {
             cout << "Login successfully\n"; 
             return true;
         }   
-    }
+    
     return false;
     cout<<"Login unsuccessfully. Please enter again";
     
@@ -100,7 +99,7 @@ int Member::setStatus()
         {
             cout << " Fail to open/create a file\n";
         }
-        myfile << userName << " " << id << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << " " << comsumingPoint << "\n";
+        myfile << userName << " " <<password<<" "<< id << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << " " << comsumingPoint <<" "<<availability<< "\n";
         myfile.close();
         cout << "You are ready to be booked\n";
         return 1;
@@ -119,57 +118,58 @@ int Member::setStatus()
 };
 
 // search Function
-void Member::search(string cityName, int creditPointCondition, vector<Supporter> listSup)
-{
-    for (int i = 0; i < listSup.size(); i++)
-    {
-        if (listSup[i].address == cityName && creditPointCondition < listSup[i].creditPoint) // compare the string input from user
-        {
-            cout << "Around you: \n";
-            listSup[i].showInfoSup();
-        }
-        else
-        {
-            cout << "No one is suitable\n";
-        }
-    }
-}
+// void Member::search(string cityName, int creditPointCondition, vector<Supporter> listSup)
+// {
+    
+//     for (int i = 0; i < listSup.size(); i++)
+//     {
+//         if (listSup[i].addressSup == cityName && creditPointCondition < listSup[i].creditPointSup) // compare the string input from user
+//         {
+//             cout << "Around you: \n";
+//             listSup[i].showInfoSup();
+//         }
+//         else
+//         {
+//             cout << "No one is suitable\n";
+//         }
+//     }
+// }
 
 // send Request or Book a supporter
-void Member::sendRequest(std::vector<Supporter> listSup)
-{
-    string userNameSup;
-    cout << "Enter the username of supporter: ";
-    std::getline(cin >> std::ws, userNameSup);
-    for (int i = 0; i < listSup.size(); i++)
-    {
-        if (userNameSup == listSup[i].userName)
-        {
-            string title;
-            string description;
-            string status = "";
-            cout << "Enter the title of Request";
-            std::getline(cin >> std::ws, title);
-            cout << "Enter the description of Request";
-            std::getline(cin >> std::ws, description);
-            std::fstream myFile;
-            myFile.open("Request.dat", std::ios::app | std::ios::out);
-            if (!myFile)
-            {
-                cout << "Fail to open or create file";
-            }
-            myFile << userName << " " << userNameSup << " " << title << " " << description << " " << status << "\n";
+// void Member::sendRequest(std::vector<Supporter> listSup)
+// {
+//     string userNameSup;
+//     cout << "Enter the username of supporter: ";
+//     std::getline(cin >> std::ws, userNameSup);
+//     for (int i = 0; i < listSup.size(); i++)
+//     {
+//         if (userNameSup == listSup[i].userNameSup)
+//         {
+//             string title;
+//             string description;
+//             string status = "";
+//             cout << "Enter the title of Request";
+//             std::getline(cin >> std::ws, title);
+//             cout << "Enter the description of Request";
+//             std::getline(cin >> std::ws, description);
+//             std::fstream myFile;
+//             myFile.open("Request.dat", std::ios::app | std::ios::out);
+//             if (!myFile)
+//             {
+//                 cout << "Fail to open or create file";
+//             }
+//             myFile << userName << " " << userNameSup << " " << title << " " << description << " " << status << "\n";
 
-            myFile.close();
-            cout << "send request successfully";
-            break;
-        }
-        else
-        {
-            cout << "could not find the username";
-        }
-    }
-}
+//             myFile.close();
+//             cout << "send request successfully";
+//             break;
+//         }
+//         else
+//         {
+//             cout << "could not find the username";
+//         }
+//     }
+// }
 
 // view Request Functionality
 bool Member::viewRequest(Request &req)
@@ -285,7 +285,7 @@ bool Member::blockMember(Member &mem)
     return false;
 }
 
-void rateSupport(Supporter &sup)
+void Member::rateSupport(Supporter &sup)
 {
     int skillScore, supporterScore;
     string comment;
@@ -306,9 +306,9 @@ void Member::rateMember(Member &host)
     cout << "Enter your host: ";
     std::getline(cin >> std::ws, nameOfHost);
     cout << "Enter the score for your host: ";
-    cin >> score;
+            cin >> score;
     if (nameOfHost == host.userName)
     {
         host.hostRatingScore.push_back(score);
-    }
+        }
 };

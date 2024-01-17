@@ -5,6 +5,7 @@
 #include "Member.h"
 #include "supporter.h"
 #include "request.h"
+#include "Function.h"
 using namespace std;
 using std::cin;
 using std::cout;
@@ -106,17 +107,28 @@ int main()
             std::vector<std::string> reviewSup = {};
             std::vector<RatingScore> ratingScoreSup = {};
 
-            while (myfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal)
+            fstream Supfile;
+            Supfile.open("supporters.dat", std::ios::in);
+            if (!Supfile)
             {
-                // Create a Member object
-                Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
-
-                // Create a Supporter object and add it to the list
-                Supporter singleSupporter(baseMember, reviewSup, ratingScoreSup);
-                ListofSup.push_back(singleSupporter);
+                std::cerr << "Fail to open or create the file";
             }
 
-            myfile.close();
+            else
+            {
+                while (!Supfile.eof())
+                {
+                    Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
+                    // Create a Member object
+                    // Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
+
+                    // Create a Supporter object and add it to the list
+                    Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal, reviewSup, ratingScoreSup);
+                    ListofSup.push_back(singleSupporter);
+                }
+
+                Supfile.close();
+            }
 
             // store all request
             string hostName;
@@ -152,21 +164,12 @@ int main()
 
                 if (choice == 1)
                 {
-
-                    string userNameVal;
-                    string passwordVal;
-                    cout << "Enter your username: ";
-                    std::getline(cin >> std::ws, userNameVal); // getusername
-                    cout << "Enter your Password: ";
-                    std::getline(cin >> std::ws, passwordVal); // get password
-
                     for (int i = 0; i < ListofMember.size(); i++)
                     {
-
-                        if (ListofMember[i].loginMem(ListofMember, userNameVal, passwordVal) == 1)
+                        //ListofMember[i].loginMem(userNameVal, passwordVal);
+                        if (loginMem( ListofMember[i]) == 1)
                         {
-                            while (1)
-                            {
+                           
                                 int choice; // get choice from user
                                 cout << "This is your menu:\n"
                                      << "0. Exit\n"
@@ -199,11 +202,11 @@ int main()
                                     cin >> creditPoint;
                                     // cout << "Enter the hosting score requirement: ";
                                     // cin >> hostRatingScore;
-                                    ListofMember[i].search(condition, creditPoint, ListofSup); // call function
+                                    search(condition, creditPoint, ListofSup); // call function
                                 }
                                 else if (choice == 4)
                                 {
-                                    ListofMember[i].sendRequest(ListofSup); // call function
+                                    sendRequest(ListofSup, ListofMember[i]); // call function
                                 }
                                 else if (choice == 5)
                                 {
@@ -237,7 +240,7 @@ int main()
                                 {
                                     cout << "\nInvalid value, Please follow the guide above";
                                 }
-                            }
+                        
                         }
                         else
                         {
@@ -248,6 +251,11 @@ int main()
                 }
                 else if (choice == 2)
                 {
+                    break;
+                }
+                else
+                {
+                    cout << "invalid Value";
                     break;
                 }
             }
