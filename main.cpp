@@ -162,7 +162,10 @@ int main()
             {
                 while (!myFile.eof())
                 {
-                    myFile >> hostName >> supName >> title >> description;
+                    std::getline(myFile >> std::ws, hostName);
+                    std::getline(myFile >> std::ws, supName);
+                    std::getline(myFile >> std::ws, title);
+                    std::getline(myFile >> std::ws, description);
                 }
                 Request req(hostName, supName, title, description, status);
                 ListofReq.push_back(req);
@@ -183,7 +186,7 @@ int main()
                     {
                         ListofMember[i].showInfo();
                     }
-                    
+
                     string usernameVal, passwordVal;
                     cout << "Enter your username: ";
                     std::getline(cin >> std::ws, usernameVal); // getusername
@@ -203,11 +206,16 @@ int main()
                              << "3. Search Supporter\n"
                              << "4. Send Request\n"
                              << "5. View Request\n"
-                             << "6. Check your Request\n";
+                             << "6. Check your Request\n"
+                             << "7. Performe Top Up\n";
                         cout << "Enter your choice: ";
                         cin >> choice;
                         // loop through all member in list
-                        if (choice == 1)
+                        if (choice == 7)
+                        {
+                            perfomeTopUp(foundMember);
+                        }
+                        else if (choice == 1)
                         {
                             foundMember.showInfo(); // call function
                         }
@@ -228,7 +236,6 @@ int main()
                             // cout << "Enter the hosting score requirement: ";
                             // cin >> hostRatingScore;
                             search(cityName, creditPoint, ListofSup); // call function
-                            
                         }
                         else if (choice == 4)
                         {
@@ -238,14 +245,10 @@ int main()
                         {
                             for (int i = 0; i < ListofReq.size(); i++)
                             {
-                                if (ListofMember[i].viewRequest(ListofReq[i]) == false)
+                                if (viewRequest(foundMember, ListofReq) == true)
                                 // call function
                                 {
-                                    ListofMember[i].interactRequest(ListofReq[i]);
-                                    if (ListofMember[i].interactRequest(ListofReq[i]) == 1)
-                                    {
-                                        ListofMember[i].rateMember(ListofMember[i]);
-                                    }
+                                    interactRequest(foundMember, ListofReq[i], ListofSup);
                                 }
                                 else
                                 {
@@ -255,8 +258,9 @@ int main()
                         }
                         else if (choice == 6)
                         {
-                            foundMember.checkStatusRequest();
+                            checkStatusRequest(foundMember, ListofSup);
                         }
+
                         else if (choice == 0)
                         {
                             cout << "\nExit. Return to the Login Section!\n";

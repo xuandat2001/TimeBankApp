@@ -8,6 +8,7 @@
 using std::cin;
 using std::cout;
 using std::string;
+class Request;
 class Member;
 class Supporter{
 private:
@@ -49,7 +50,9 @@ public:
     //void rateMember(Member &host);
     friend class Member;
     friend void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
-    friend void sendRequest(std::vector<Supporter> listSup, Member mem);
+    friend void sendRequest(std::vector<Supporter> &listSup, Member &mem);
+    friend int interactRequest(Member &mem, Request &req,std::vector<Supporter> &listSup);
+    friend bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);
     // friend void sendRequest(string userNameSup);
     // bool rateMember(Member &mem);
 };
