@@ -11,6 +11,7 @@ using std::cin;
 using std::cout;
 using std::string;
 class Supporter;
+class Request;
 class Member
 {
 protected:
@@ -58,8 +59,10 @@ public:
     bool blockMember(Member &Mem);
     void rateSupport(Supporter &sup);
     void rateMember(Member &host);
-    friend bool loginMem( Member &mem);
+    friend int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
     friend void sendRequest(std::vector<Supporter> listSup,Member mem);
+    friend int setStatus(Member &mem);
+    friend bool viewRequest(Member &mem, Request &req);
    
 };
 #endif

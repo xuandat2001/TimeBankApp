@@ -64,58 +64,6 @@ void Member::showInfoVip()
     cout << endl;
 }
 
-// Login function
-bool Member::loginMem( string usernameVal, string passwordVal)
-{
-
-        if (userName == usernameVal && password == passwordVal) // Check username and password
-        {
-            cout << "Login successfully\n"; 
-            return true;
-        }   
-    
-    return false;
-    cout<<"Login unsuccessfully. Please enter again";
-    
-};
-
-// set avalablyty of each member
-int Member::setStatus()
-{
-    int choice;
-    cout << "Set your status\n";
-    cout << "1 for On\n";
-    cout << "2 for Off\n";
-    cout << "Enter ur choice: ";
-    cin >> choice;
-    if (choice == 1)
-    {
-        availability == true;                                         // mode on
-        cout<<"Enter your consuming point: ";
-        cin>> comsumingPoint;
-        fstream myfile;                                               // create a file to store all the infor of a member as a supporter
-        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
-        if (!myfile)
-        {
-            cout << " Fail to open/create a file\n";
-        }
-        myfile << userName << " " <<password<<" "<< id << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << " " << comsumingPoint <<" "<<availability<< "\n";
-        myfile.close();
-        cout << "You are ready to be booked\n";
-        return 1;
-    }
-    else if (choice == 2)
-    {
-        availability == false; // mode off
-        cout << "do not disrupt";
-        return 2;
-    }
-    else
-    {
-        cout << "Invalid value";
-        return -1;
-    }
-};
 
 // search Function
 // void Member::search(string cityName, int creditPointCondition, vector<Supporter> listSup)

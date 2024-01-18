@@ -55,7 +55,7 @@ void Supporter::showInfoSup()
 }
 void Supporter::requirementSup()
 {
-    cout << "There is a supporter with consuming point: " << comsumingPointSup << "credit points/hour and minimum required host-rating score is 3.";
+    cout << "There is a supporter with consuming point: " << comsumingPointSup << "credit points/hour and minimum required host-rating score is 3.\n";
 }
 /* void Supporter::rateMember(Member &host)
 {
