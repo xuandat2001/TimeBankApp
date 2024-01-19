@@ -18,4 +18,5 @@ bool viewRequest(Member &mem, std::vector<Request> ListofReq);
 int interactRequest(Member &mem, Request &req,std::vector<Supporter> &listSup);
 bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);
 bool perfomeTopUp(Member &mem);
+void rateMember(std::vector<Member> ListofMem);
 #endif

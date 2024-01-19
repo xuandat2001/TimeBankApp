@@ -236,10 +236,9 @@ bool perfomeTopUp(Member &mem)
     cin >> money;
     if (money > 0)
     {
-       
-                mem.creditPoint += money;
-                cout << "Payment successful\n";
-            
+
+        mem.creditPoint += money;
+        cout << "Payment successful\n";
 
         return true;
     }
@@ -249,3 +248,21 @@ bool perfomeTopUp(Member &mem)
         return false;
     }
 }
+
+void rateMember(std::vector<Member> ListofMem)
+{
+    int score;
+    string nameOfHost;
+    cout << "Enter your host: ";
+    std::getline(cin >> std::ws, nameOfHost);
+    for (int i = 0; i < ListofMem.size(); i++)
+    {
+        if (nameOfHost == ListofMem[i].userName)
+        {
+            cout << "Enter the score for your host: ";
+            cin >> score;
+            ListofMem[i].hostRatingScore.push_back(score);
+
+        }
+    }
+};

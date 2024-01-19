@@ -45,8 +45,6 @@ public:
 
     void showInfo();
     void showInfoVip();
-    //int interactRequest(Request &req);
-    bool checkStatusRequest();
     void viewSpecificMem(Member &mem);
     bool blockMember(Member &Mem);
     void rateSupport(Supporter &sup);
@@ -59,5 +57,6 @@ public:
     friend void rateMember(std::vector<Member> ListofMem);
     friend bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);
     friend bool perfomeTopUp(Member &mem);
+    friend void rateMember(std::vector<Member> ListofMem);
 };
 #endif

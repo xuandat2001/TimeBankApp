@@ -207,7 +207,8 @@ int main()
                              << "4. Send Request\n"
                              << "5. View Request\n"
                              << "6. Check your Request\n"
-                             << "7. Performe Top Up\n";
+                             << "7. Performe Top Up\n"
+                             << "8. Rate Host\n";
                         cout << "Enter your choice: ";
                         cin >> choice;
                         // loop through all member in list
@@ -259,6 +260,9 @@ int main()
                         else if (choice == 6)
                         {
                             checkStatusRequest(foundMember, ListofSup);
+                        }
+                        else if(choice == 8){
+                            rateMember(ListofMember);
                         }
 
                         else if (choice == 0)
