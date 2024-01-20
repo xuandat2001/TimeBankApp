@@ -27,6 +27,7 @@ protected:
     std::vector<int> hostRatingScore;
     int comsumingPoint;
     bool availability;
+    bool blockMem = false;
 
 public:
     // all declarations
@@ -42,21 +43,19 @@ public:
            std::vector<int> hostRatingScoreVal = {},
            int comsumingPointVal = 0,
            bool availabilityVal = false);
-
+    bool block();
     void showInfo();
     void showInfoVip();
-    void viewSpecificMem(Member &mem);
-    bool blockMember(Member &Mem);
     void rateSupport(Supporter &sup);
-    void rateMember(Member &host);
     friend int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
     friend void sendRequest(std::vector<Supporter> &listSup, Member &mem);
     friend int setStatus(Member &mem);
     friend bool viewRequest(Member &mem, std::vector<Request> ListofReq);
     friend int interactRequest(Member &mem, Request &req,std::vector<Supporter> &listSup);
-    friend void rateMember(std::vector<Member> ListofMem);
     friend bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);
     friend bool perfomeTopUp(Member &mem);
-    friend void rateMember(std::vector<Member> ListofMem);
+    friend void rateMember(Member &mem, string &nameOfHost, int &score);
+    friend void viewSpecificMem(string &nameOfMem, Member &mem);
+    friend bool blockMember(Member &mem,std::vector<Member> ListofMem);
 };
 #endif

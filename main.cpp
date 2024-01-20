@@ -24,10 +24,10 @@ int main()
          << "TIME BANK APPLICATION\n"
          << "Instructor: Mr. Tran Duc Linh\n"
          << "Group: Group No.\n"
-         << "sXXXXXXX, Student Name\n"
-         << "sXXXXXXX, Student Name\n"
-         << "sXXXXXXX, Student Name\n"
-         << "sXXXXXXX, Student Name\n"
+         << "s3979802, NGUYEN HAI LAM\n"
+         << "s3970891, PHAM QUANG HUY\n"
+         << "s3993986, HONG THIEU KIET\n"
+         << "s3932156, UNG XUAN DAT\n"
          << "\n\nWELLCOME TO TIME BANK APP\n";
     while (1)
     {
@@ -49,12 +49,15 @@ int main()
 
             if (choice1 == 1)
             {
-                Guests.registerMember();
+                registerMember(Guests);
             }
 
             else if (choice1 == 2)
             {
-                Guests.viewSupporters();
+                viewSupporters(Guests);
+            }
+            else if(choice1==0){
+                break;
             }
             else
             {
@@ -120,7 +123,8 @@ int main()
             double comsumingPointSup;
             bool availabilityVal;
             std::vector<std::string> reviewSup = {};
-            std::vector<RatingScore> ratingScoreSup = {};
+            int skillScore = 0;
+            int supporterScore = 0;
 
             fstream Supfile;
             Supfile.open("supporters.dat", std::ios::in);
@@ -138,7 +142,7 @@ int main()
                     // Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
 
                     // Create a Supporter object and add it to the list
-                    Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal, reviewSup, ratingScoreSup);
+                    Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal, reviewSup, skillScore, supporterScore);
                     ListofSup.push_back(singleSupporter);
                 }
 
@@ -182,11 +186,6 @@ int main()
 
                 if (choice == 1)
                 {
-                    for (int i = 0; i < ListofMember.size(); i++)
-                    {
-                        ListofMember[i].showInfo();
-                    }
-
                     string usernameVal, passwordVal;
                     cout << "Enter your username: ";
                     std::getline(cin >> std::ws, usernameVal); // getusername
@@ -208,7 +207,10 @@ int main()
                              << "5. View Request\n"
                              << "6. Check your Request\n"
                              << "7. Performe Top Up\n"
-                             << "8. Rate Host\n";
+                             << "8. Rate Host\n"
+                             << "9. Block Member\n"
+                             << "10. View Specific Member\n"
+                             << "11. Rate Supporter\n";
                         cout << "Enter your choice: ";
                         cin >> choice;
                         // loop through all member in list
@@ -261,10 +263,49 @@ int main()
                         {
                             checkStatusRequest(foundMember, ListofSup);
                         }
-                        else if(choice == 8){
-                            rateMember(ListofMember);
+                        else if (choice == 8)
+                        {
+                            int score;
+                            string nameOfHost;
+                            cout << "Enter name of your host: ";
+                            std::getline(cin >> std::ws, nameOfHost);
+                            cout << "Enter the score for your host: ";
+                            cin >> score;
+                            for (int i = 0; i < ListofMember.size(); i++)
+                            {
+                                rateMember(ListofMember[i], nameOfHost, score);
+                            }
                         }
+                        else if (choice == 9)
+                        {
+                            blockMember(foundMember, ListofMember);
+                        }
+                        else if (choice == 10)
+                        {
+                            string nameOfMem;
+                            cout << "Enter name of member: ";
+                            std::getline(cin >> std::ws, nameOfMem);
+                            for (int i = 0; i < ListofMember.size(); i++)
+                            {
+                                viewSpecificMem(nameOfMem, ListofMember[i]);
+                            }
+                        }
+                        else if (choice == 11)
+                        {
+                            string nameOfSup;
+                            cout << "Enter name of member: ";
+                            std::getline(cin >> std::ws, nameOfSup);
+                            int skillScore, supporterScore;
+                            string comment;
+                            cout << "Enter the skill score: ";
+                            cin >> skillScore;
+                            cout << "Enter the Supporter's score: ";
+                            cin >> supporterScore;
+                            cout << "Enter your comment: ";
+                            std::getline(cin >> std::ws, comment);
+                            rateSupport(nameOfSup,skillScore,supporterScore,comment,ListofSup);
 
+                        }
                         else if (choice == 0)
                         {
                             cout << "\nExit. Return to the Login Section!\n";

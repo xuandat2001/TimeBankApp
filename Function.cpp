@@ -1,5 +1,144 @@
 #include "Function.h"
 
+
+// LAm's Finctions
+void registerMember(Guest &guest)
+{
+    fstream myfile;
+    cout << "Member's information input: ";
+    cout << "\nEnter your username: ";
+    cin >> guest.userName;
+    cout << "\nEnter your password: ";
+    cin >> guest.password;
+    cout << "\nEnter your ID: ";
+    cin >> guest.memID;
+    cout << "\nEnter your fullname: ";
+    cin >> guest.fullName;
+    cout << "\nEnter your email: ";
+    cin >> guest.email;
+    cout << "\nEnter your phoneNumber: ";
+    cin >> guest.phoneNumber;
+    cout << "\nEnter your address: ";
+    cin >> guest.address;
+    cout << "\nEnter your skills: ";
+    cin >> guest.skillsInfo;
+    guest.creditPoint = 20;
+
+    myfile.open("member.dat", std::ios::app | std::ios::out); // open a file
+    myfile << guest.password << "\n";
+    myfile << guest.memID << "\n";
+    myfile << guest.userName << "\n";
+    myfile << guest.fullName << "\n";
+    myfile << guest.email << "\n";
+    myfile << guest.phoneNumber << "\n";
+    myfile << guest.address << "\n";
+    myfile << guest.skillsInfo << "\n";
+    myfile << guest.creditPoint << "\n";
+
+    // myfile << password << " " << memID << " " << userName << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << "\n"; //save data to file
+    myfile.close();
+
+    cout << "Your credit points is added to a total of: " << guest.creditPoint << "\n"
+         << "You have registered successfully.\n";
+}
+
+void viewSupporters(Guest &guest)
+{
+
+    int totalMembers = 0;
+    int memNum1;
+    fstream myfile;
+
+    myfile.open("supporters.dat", std::ios::in);
+
+    if (!myfile)
+    {
+        cout << " No data to be found\n";
+    }
+    else
+    {
+
+        // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
+        while (!myfile.eof())
+        { // if not at the end of file
+            std::getline(myfile>>std::ws, guest.password);
+            std::getline(myfile>>std::ws, guest.memID);
+            std::getline(myfile>>std::ws, guest.userName);
+            std::getline(myfile>>std::ws, guest.fullName);
+            std::getline(myfile>>std::ws, guest.email);
+            myfile >> guest.phoneNumber;
+            std::getline(myfile>>std::ws, guest.address);
+            std::getline(myfile>>std::ws, guest.skillsInfo);
+            myfile >> guest.creditPoint;
+            cout << "Member No." << totalMembers++ << "\n"; // output to the terminal
+            cout << "Username: " << guest.userName << "\n";
+            cout << "Member ID: " << guest.memID << "\n";
+            cout << "Full name: " << guest.fullName << "\n";
+            cout << "Email: " << guest.email << "\n";
+            cout << "Phone number: " << guest.phoneNumber << "\n";
+            cout << "Address: " << guest.address << "\n";
+            cout << "Skills: " << guest.skillsInfo << "\n";
+            cout << "Credit points: " << guest.creditPoint << "\n";
+            cout << endl;
+            // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //assign again to terminate the loop
+        }
+        if (totalMembers == 0)
+        { // check if there is no data input ever before
+            cout << " No data to be found\n";
+        }
+    }
+    myfile.close();
+}
+// Huy's Funtions
+int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)
+{
+    for (size_t i = 0; i < ListofMem.size(); i++)
+    {
+
+        if (ListofMem[i].userName == usernameVal && ListofMem[i].password == passwordVal) // Check username and password
+        {
+            return static_cast<int>(i);
+        }
+    }
+    return -1;
+};
+
+int setStatus(Member &mem)
+{
+    int choice;
+    cout << "Set your status\n";
+    cout << "1 for On\n";
+    cout << "2 for Off\n";
+    cout << "Enter ur choice: ";
+    cin >> choice;
+    if (choice == 1)
+    {
+        mem.availability == true; // mode on
+        cout << "Enter your consuming point: ";
+        cin >> mem.comsumingPoint;
+        fstream myfile;                                               // create a file to store all the infor of a member as a supporter
+        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
+        if (!myfile)
+        {
+            cout << " Fail to open/create a file\n";
+        }
+        myfile << mem.userName << " " << mem.password << " " << mem.id << " " << mem.fullName << " " << mem.email << " " << mem.phoneNumber << " " << mem.address << " " << mem.skillsInfo << " " << mem.creditPoint << " " << mem.comsumingPoint << " " << mem.availability << "\n";
+        myfile.close();
+        cout << "You are ready to be booked\n";
+        return 1;
+    }
+    else if (choice == 2)
+    {
+        mem.availability == false; // mode off
+        cout << "You turn off mode Supporter";
+        return 2;
+    }
+    else
+    {
+        cout << "Invalid value";
+        return -1;
+    }
+};
 void search(string cityName, int creditPointCondition, vector<Supporter> listSup)
 {
 
@@ -60,55 +199,9 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
     }
 }
 
-int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)
-{
-    for (size_t i = 0; i < ListofMem.size(); i++)
-    {
 
-        if (ListofMem[i].userName == usernameVal && ListofMem[i].password == passwordVal) // Check username and password
-        {
-            return static_cast<int>(i);
-        }
-    }
-    return -1;
-};
 
-int setStatus(Member &mem)
-{
-    int choice;
-    cout << "Set your status\n";
-    cout << "1 for On\n";
-    cout << "2 for Off\n";
-    cout << "Enter ur choice: ";
-    cin >> choice;
-    if (choice == 1)
-    {
-        mem.availability == true; // mode on
-        cout << "Enter your consuming point: ";
-        cin >> mem.comsumingPoint;
-        fstream myfile;                                               // create a file to store all the infor of a member as a supporter
-        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
-        if (!myfile)
-        {
-            cout << " Fail to open/create a file\n";
-        }
-        myfile << mem.userName << " " << mem.password << " " << mem.id << " " << mem.fullName << " " << mem.email << " " << mem.phoneNumber << " " << mem.address << " " << mem.skillsInfo << " " << mem.creditPoint << " " << mem.comsumingPoint << " " << mem.availability << "\n";
-        myfile.close();
-        cout << "You are ready to be booked\n";
-        return 1;
-    }
-    else if (choice == 2)
-    {
-        mem.availability == false; // mode off
-        cout << "You turn off mode Supporter";
-        return 2;
-    }
-    else
-    {
-        cout << "Invalid value";
-        return -1;
-    }
-};
+//Kiet's Function
 
 bool viewRequest(Member &mem, std::vector<Request> ListofReq)
 
@@ -175,23 +268,6 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup)
     }
 }
 
-void rateMember(std::vector<Member> ListofMem)
-{
-    for (int i = 0; i < ListofMem.size(); i++)
-    {
-        int score;
-        string nameOfHost;
-        cout << "Enter your host: ";
-        std::getline(cin >> std::ws, nameOfHost);
-        cout << "Enter the score for your host: ";
-        cin >> score;
-        if (nameOfHost == ListofMem[i].userName)
-        {
-            ListofMem[i].hostRatingScore.push_back(score);
-        }
-    }
-}
-
 bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup)
 {
     string nameHostVal;
@@ -227,6 +303,7 @@ bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup)
     return false;
 };
 
+// Dat's Function
 bool perfomeTopUp(Member &mem)
 {
     string userName;
@@ -249,20 +326,68 @@ bool perfomeTopUp(Member &mem)
     }
 }
 
-void rateMember(std::vector<Member> ListofMem)
+void rateMember(Member &mem, string &nameOfHost, int &score)
 {
-    int score;
-    string nameOfHost;
-    cout << "Enter your host: ";
-    std::getline(cin >> std::ws, nameOfHost);
+    if (nameOfHost == mem.userName)
+    {
+        mem.hostRatingScore.push_back(score);
+        cout << "Rate Successfully\n";
+    }
+};
+
+void viewSpecificMem(string &nameOfMem, Member &mem)
+{
+    if (mem.block() != true && nameOfMem == mem.userName)
+    {
+        cout << "Full name: " << mem.fullName << "\n";
+        cout << "Email: " << mem.email << "\n";
+        cout << "Phone number: " << mem.phoneNumber << "\n";
+        cout << "Address: " << mem.address << "\n";
+        cout << "Skills: " << mem.skillsInfo << "\n";
+        cout << "Consuming Point: " << mem.comsumingPoint << "\n";
+        for (int i = 0; i < mem.hostRatingScore.size(); i++)
+        {
+            cout << "HostScore: " << mem.hostRatingScore[i] << "\n";
+        }
+        cout << endl;
+    }
+    else
+    {
+        cout << "This member has block you!\n";
+    }
+};
+
+bool blockMember(Member &mem, std::vector<Member> ListofMem)
+{
+    bool status = false;
+    string nameOfMem;
+    cout << "Enter name that you want to block: ";
+    std::getline(cin >> std::ws, nameOfMem);
     for (int i = 0; i < ListofMem.size(); i++)
     {
-        if (nameOfHost == ListofMem[i].userName)
+        if (nameOfMem == ListofMem[i].userName)
         {
-            cout << "Enter the score for your host: ";
-            cin >> score;
-            ListofMem[i].hostRatingScore.push_back(score);
-
+            mem.block();
+            cout << "Block sucessfully, he/she can see your information\n";
+            status = true;
+        }
+    }
+    if (status == true)
+    {
+        return true;
+    }
+    return false;
+}
+void rateSupport(string nameOfSup, int &skillScore, int &supporterscore, string &comment, std::vector<Supporter>&listSup)
+{
+    for (int i = 0; i < listSup.size(); i++)
+    {
+        if (nameOfSup == listSup[i].userNameSup)
+        {
+            listSup[i].reviewSup.push_back(comment);
+            listSup[i].skillScore = skillScore;
+            listSup[i].supporterScore = supporterscore;
+            cout << "Rate Successfully";
         }
     }
 };

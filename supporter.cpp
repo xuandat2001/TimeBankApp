@@ -16,20 +16,21 @@ Supporter::Supporter(string userNameVal,
                      int comsumingPointVal,
                      bool availabilityVal,
                      std::vector<string> reviewVal,
-                     
-                     std::vector<RatingScore> ratingScoreSupVal) : userNameSup(userNameVal),
-                                                                          passwordSup(passwordVal),
-                                                                          idSup(idVal),
-                                                                          fullNameSup(fullNameVal),
-                                                                          emailSup(emailVal),
-                                                                          phoneNumberSup(phoneNumberVal),
-                                                                          addressSup(addressVal),
-                                                                          creditPointSup(creditPointVal),
-                                                                          skillsInfoSup(skillsInfoVal),
-                                                                          HostratingScoreSup(HostratingScoreVal),
-                                                                          comsumingPointSup(comsumingPointVal),
-                                                                          availabilitySup(availabilityVal),
-                                                                   reviewSup(reviewVal), ratingScoreSup(ratingScoreSupVal){};
+
+                     int skillScoreVal,
+                     int supporterScoreVal) : userNameSup(userNameVal),
+                                              passwordSup(passwordVal),
+                                              idSup(idVal),
+                                              fullNameSup(fullNameVal),
+                                              emailSup(emailVal),
+                                              phoneNumberSup(phoneNumberVal),
+                                              addressSup(addressVal),
+                                              creditPointSup(creditPointVal),
+                                              skillsInfoSup(skillsInfoVal),
+                                              HostratingScoreSup(HostratingScoreVal),
+                                              comsumingPointSup(comsumingPointVal),
+                                              availabilitySup(availabilityVal),
+                                              reviewSup(reviewVal), skillScore(skillScoreVal),supporterScore(supporterScoreVal){};
 void Supporter::showInfoSup()
 {
     cout << "Name of Supporter: " << userNameSup << "\n";
@@ -37,19 +38,15 @@ void Supporter::showInfoSup()
     cout << "Email of Supporter: " << emailSup << "\n";
     cout << "Phone of Supporter: " << phoneNumberSup << "\n";
     cout << "Address of Supporter: " << addressSup << "\n";
-    cout << "Credit Point of Supporter: " <<creditPointSup << "\n";
+    cout << "Credit Point of Supporter: " << creditPointSup << "\n";
     cout << "Skills of Supporter: " << skillsInfoSup << "\n";
     cout << "Consuming Point of Supporter: " << comsumingPointSup << "\n";
     for (int i = 0; i < reviewSup.size(); i++)
     {
         cout << "reviews of Supporter: " << reviewSup[i] << "\n";
     }
-
-    for (int i = 0; i < ratingScoreSup.size(); i++)
-    {
-        ratingScoreSup[i].showScore();
-        ratingScoreSup[i].showAveScore();
-    }
+    cout << "Skill point of Supportet: " <<skillScore << "\n";
+    cout << "Supporter Point : " << supporterScore << "\n";
 
     // cout<<"RatingScore of Supporter: " <<ratingScoreSup <<"\n";
 }

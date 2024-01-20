@@ -53,10 +53,7 @@ public:
     }*/
 
     string getSkillsInfo();
-    
-    void registerMember();
-
-    void viewSupporters();
-    //friend class Supporter{};
+    friend void registerMember(Guest &guest);
+    friend void viewSupporters(Guest &guest);
 };
 #endif
