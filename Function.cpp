@@ -47,6 +47,8 @@ void viewSupporters(Guest &guest)
 
     int totalMembers = 0;
     int memNum1;
+    int comsumingPoint;
+    bool availability;
     fstream myfile;
 
     myfile.open("supporters.dat", std::ios::in);
@@ -61,15 +63,7 @@ void viewSupporters(Guest &guest)
         // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
         while (!myfile.eof())
         { // if not at the end of file
-            std::getline(myfile>>std::ws, guest.password);
-            std::getline(myfile>>std::ws, guest.memID);
-            std::getline(myfile>>std::ws, guest.userName);
-            std::getline(myfile>>std::ws, guest.fullName);
-            std::getline(myfile>>std::ws, guest.email);
-            myfile >> guest.phoneNumber;
-            std::getline(myfile>>std::ws, guest.address);
-            std::getline(myfile>>std::ws, guest.skillsInfo);
-            myfile >> guest.creditPoint;
+            myfile >> guest.password >> guest.memID >> guest.userName >> guest.fullName >> guest.email >> guest.phoneNumber >>guest.address >> guest.skillsInfo>> guest.creditPoint>> comsumingPoint >> availability;
             cout << "Member No." << totalMembers++ << "\n"; // output to the terminal
             cout << "Username: " << guest.userName << "\n";
             cout << "Member ID: " << guest.memID << "\n";
