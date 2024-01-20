@@ -25,15 +25,7 @@ void registerMember(Guest &guest)
     guest.creditPoint = 20;
 
     myfile.open("member.dat", std::ios::app | std::ios::out); // open a file
-    /*myfile << guest.password << "\n";
-    myfile << guest.memID << "\n";
-    myfile << guest.userName << "\n";
-    myfile << guest.fullName << "\n";
-    myfile << guest.email << "\n";
-    myfile << guest.phoneNumber << "\n";
-    myfile << guest.address << "\n";
-    myfile << guest.skillsInfo << "\n";
-    myfile << guest.creditPoint << "\n";*/
+ 
 
      myfile << guest.password << " " << guest.memID << " " << guest.userName << " " << guest.fullName << " " << guest.email << " " << guest.phoneNumber << " " << guest.address << " " << guest.skillsInfo << " " << guest.creditPoint << "\n"; //save data to file
     myfile.close();
@@ -59,7 +51,7 @@ void viewSupporters(Guest &guest)
     }
     else
     {
-
+        std::string line;
         // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
         while (!myfile.eof())
         { // if not at the end of file
