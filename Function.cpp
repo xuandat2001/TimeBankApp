@@ -182,6 +182,7 @@ int setStatus(Member &mem)
         return -1;
     }
 };
+
 void search(string cityName, int creditPointCondition, vector<Supporter> listSup)
 {
 
