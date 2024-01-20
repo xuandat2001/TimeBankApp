@@ -91,7 +91,16 @@ int main()
                 while (!myfile.eof())
                 { // if not at the end of file
                     // if not at the end of file
-                     myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
+                    std::getline(myfile >> std::ws, password);
+                    std::getline(myfile >> std::ws, id);
+                    std::getline(myfile >> std::ws, userName);
+                    std::getline(myfile >> std::ws, fullName);
+                    std::getline(myfile >> std::ws, email);
+                    std::getline(myfile >> std::ws, phoneNumber);
+                    std::getline(myfile >> std::ws, address);
+                    std::getline(myfile >> std::ws, skillsInfo);
+                    std::getline(myfile >> std::ws, creditPoint);
+                     //myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
                     Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
                                std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability); // take data from file and assign to variables
                     ListofMember.push_back(mem);
@@ -107,13 +116,13 @@ int main()
             std::string idSup;
             std::string fullNameSup;
             std::string emailSup;
-            double phoneNumberSup;
+            string phoneNumberSup;
             std::string addressSup;
-            double creditPointSup;
-            std::string skillsInfoSup;
+            string creditPointSup;
+            string skillsInfoSup;
             std::vector<int> hostRatingScoreVal = {};
-            double comsumingPointSup;
-            bool availabilityVal;
+            string comsumingPointSup;
+            bool availabilityVal = true;
             std::vector<std::string> reviewSup = {};
             int skillScore = 0;
             int supporterScore = 0;
@@ -129,12 +138,23 @@ int main()
             {
                 while (!Supfile.eof())
                 {
-                    Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
+                    std::getline(Supfile>>std::ws, userNameSup);
+                    std::getline(Supfile>>std::ws, passwordSup);
+                    std::getline(Supfile>>std::ws, idSup);
+                    std::getline(Supfile>>std::ws, fullNameSup);
+                    std::getline(Supfile>>std::ws, emailSup);
+                    std::getline(Supfile>>std::ws, phoneNumberSup);
+                    std::getline(Supfile>>std::ws, addressSup);
+                    std::getline(Supfile>>std::ws, skillsInfoSup);
+                    std::getline(Supfile>>std::ws, creditPointSup);
+                    std::getline(Supfile>>std::ws, comsumingPointSup);
+                    
+                    //Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
                     // Create a Member object
                     // Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
 
                     // Create a Supporter object and add it to the list
-                    Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal, reviewSup, skillScore, supporterScore);
+                    Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, std::stod(phoneNumberSup), addressSup, std::stod(creditPointSup), skillsInfoSup, hostRatingScoreVal, std::stod(comsumingPointSup), availabilityVal, reviewSup, skillScore, supporterScore);
                     ListofSup.push_back(singleSupporter);
                 }
 
