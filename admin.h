@@ -11,15 +11,14 @@ using std::cout;
 
 class Admin{
     private:
-    string AuserName = "given";
-    string Apassword = "given";
+    string AuserName = "admin";
+    string Apassword = "rmit1234";
 
     public:
     string getAuserName();
 
     string getApassword();
-
-    void modifyPassword();
+    friend void modifyPassword(Admin &admin);
 };
 
 #endif

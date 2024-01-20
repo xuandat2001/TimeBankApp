@@ -25,7 +25,7 @@ void registerMember(Guest &guest)
     guest.creditPoint = 20;
 
     myfile.open("member.dat", std::ios::app | std::ios::out); // open a file
-    myfile << guest.password << "\n";
+    /*myfile << guest.password << "\n";
     myfile << guest.memID << "\n";
     myfile << guest.userName << "\n";
     myfile << guest.fullName << "\n";
@@ -33,9 +33,9 @@ void registerMember(Guest &guest)
     myfile << guest.phoneNumber << "\n";
     myfile << guest.address << "\n";
     myfile << guest.skillsInfo << "\n";
-    myfile << guest.creditPoint << "\n";
+    myfile << guest.creditPoint << "\n";*/
 
-    // myfile << password << " " << memID << " " << userName << " " << fullName << " " << email << " " << phoneNumber << " " << address << " " << skillsInfo << " " << creditPoint << "\n"; //save data to file
+     myfile << guest.password << " " << guest.memID << " " << guest.userName << " " << guest.fullName << " " << guest.email << " " << guest.phoneNumber << " " << guest.address << " " << guest.skillsInfo << " " << guest.creditPoint << "\n"; //save data to file
     myfile.close();
 
     cout << "Your credit points is added to a total of: " << guest.creditPoint << "\n"
@@ -88,6 +88,63 @@ void viewSupporters(Guest &guest)
         }
     }
     myfile.close();
+}
+
+void modifyPassword(Admin &admin)
+{
+    Guest guest2;
+    string userName2 = guest2.getUserName();
+    string password2 = guest2.getPassword();
+    string fullName2 = guest2.getFullName();
+    string email2 = guest2.getEmail();
+    int phoneNumber2 = guest2.getPhoneNumber();
+    string address2 = guest2.getAddress();
+    int creditPoints2 = guest2.getCreditPoint();
+    string skillsInfo2 = guest2.getSkillsInfo();
+    int memNum2;
+    int found = 0; // variable to check for found result
+    fstream myfile, myfile1;
+
+    myfile.open("member.dat", std::ios::in);
+
+    if (!myfile)
+    {
+        cout << " No data to be found\n";
+        myfile.close();
+    }
+    else
+    {
+        int memNo;
+        cout << "Enter the member number you want to modify: ";
+        cin >> memNo;
+        myfile1.open("Newmember.dat", std::ios::app | std::ios::out);
+        myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2>> creditPoints2;
+        while (!myfile.eof())
+        {
+            if (memNo != memNum2)
+            {
+                myfile1 << password2 << " " << memNum2 << " " << userName2 << " " << fullName2 << " "
+                        << email2 << " " << phoneNumber2 << " " << address2 << " " << skillsInfo2 << creditPoints2<<"\n";
+            }
+            else
+            {
+                cout << "Enter new password :";
+                cin >> password2;
+                myfile1 << password2 << " " << memNum2 << " " << userName2 << " " << fullName2 << " "
+                        << email2 << " " << phoneNumber2 << " " << address2 << " " << skillsInfo2 << creditPoints2<<"\n";
+                found++;
+            }
+            myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2>>creditPoints2;
+            if (found == 0)
+            {
+                cout << "Member not found.";
+            }
+        }
+    }
+    myfile1.close();
+    myfile.close();
+    remove("member.dat");
+    rename("Newmember.dat", "member.dat");
 }
 // Huy's Funtions
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)

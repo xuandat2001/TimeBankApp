@@ -91,15 +91,7 @@ int main()
                 while (!myfile.eof())
                 { // if not at the end of file
                     // if not at the end of file
-                    std::getline(myfile >> std::ws, password);
-                    std::getline(myfile >> std::ws, id);
-                    std::getline(myfile >> std::ws, userName);
-                    std::getline(myfile >> std::ws, fullName);
-                    std::getline(myfile >> std::ws, email);
-                    myfile >> phoneNumber;
-                    std::getline(myfile >> std::ws, address);
-                    std::getline(myfile >> std::ws, skillsInfo);
-                    myfile >> creditPoint;
+                     myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
                     Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
                                std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability); // take data from file and assign to variables
                     ListofMember.push_back(mem);
@@ -368,7 +360,7 @@ int main()
                     cin >> choice2;
                     if (choice2 == 1)
                     {
-                        admin.modifyPassword();
+                        modifyPassword(admin);
                     }
                     else
                     {
