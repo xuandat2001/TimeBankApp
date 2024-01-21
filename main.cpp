@@ -203,7 +203,7 @@ int main()
                     // ListofMember[i].loginMem(userNameVal, passwordVal);
                     if (foundMemberIndex != -1)
                     {
-                        Member foundMember = ListofMember[static_cast<size_t>(foundMemberIndex)];
+                        Member foundMember = ListofMember[foundMemberIndex];
                         cout << "Login successful\n";
                         int choiceMem; // get choice from user
                         cout << "This is your menu:\n"
@@ -263,7 +263,7 @@ int main()
                             cin >> creditPoint;
                             // cout << "Enter the hosting score requirement: ";
                             // cin >> hostRatingScore;
-                            search(cityName, creditPoint, ListofSup); // call function
+                            search(cityName, foundMember, ListofSup); // call function
                         }
                         else if (choiceMem == 4)
                         {

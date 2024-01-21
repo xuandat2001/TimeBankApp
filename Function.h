@@ -17,7 +17,7 @@ using std::string;
 void registerMember(Guest &guest);
 void viewSupporters(Guest &guest);
 void modifyPassword();
-void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
+void search(string cityName, Member &mem, vector<Supporter> listSup);
 void sendRequest(std::vector<Supporter> &listSup, Member &mem);
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
 int setStatus(Member &mem, vector<Supporter> listSup);

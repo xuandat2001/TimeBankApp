@@ -172,12 +172,12 @@ void modifyPassword()
 // Huy's Funtions
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)
 {
-    for (size_t i = 0; i < ListofMem.size(); i++)
+    for (int i = 0; i < ListofMem.size(); i++)
     {
 
         if (ListofMem[i].userName == usernameVal && ListofMem[i].password == passwordVal) // Check username and password
         {
-            return static_cast<int>(i);
+            return i;
         }
     }
     return -1;
@@ -226,12 +226,12 @@ int unlist(Member &mem, vector<Supporter> listSup)
     cout << "You're a Supporter yet \n";
     return -1;
 }
-void search(string cityName, int creditPointCondition, vector<Supporter> listSup)
+void search(string cityName, Member &mem, vector<Supporter> listSup)
 {
 
     for (int i = 0; i < listSup.size(); i++)
     {
-        if (listSup[i].addressSup == cityName && creditPointCondition < listSup[i].creditPointSup) // compare the string input from user
+        if (listSup[i].addressSup == cityName && mem.creditPoint > listSup[i].comsumingPointSup) // compare the string input from user
         {
             cout << "Around you: \n";
             listSup[i].showInfoSup();

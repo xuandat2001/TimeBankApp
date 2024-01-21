@@ -47,6 +47,7 @@ public:
     void showInfo();
     void showInfoVip();
     friend int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
+    friend void search(string cityName, Member &mem, vector<Supporter> listSup);
     friend void sendRequest(std::vector<Supporter> &listSup, Member &mem);
     friend int setStatus(Member &mem, vector<Supporter> listSup);
     friend int unlist(Member &mem, vector<Supporter> listSup);
