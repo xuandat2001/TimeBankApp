@@ -242,8 +242,8 @@ void search(string cityName, Member &mem, vector<Supporter> listSup)
         }
     }
 }
-
-void sendRequest(std::vector<Supporter> &listSup, Member &mem)
+// Kiet's Function
+void sendRequest(std::vector<Supporter> &listSup, Member &mem) // Function to send request to the chosen supporter
 {
     string userNameSupVal;
     cout << "Enter the username of supporter: ";
@@ -251,67 +251,56 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
     for (int i = 0; i < listSup.size(); i++)
     {
 
-        if (mem.block() != true && userNameSupVal == listSup[i].userNameSup)
+        if (userNameSupVal == listSup[i].userNameSup) // Check for correct supporter to retrieve information from
         {
             listSup[i].requirementSup();
-            if (listSup[i].comsumingPointSup > mem.creditPoint)
+            if (listSup[i].comsumingPointSup > mem.creditPoint) // Check for valid credit Points to send request
             {
                 cout << "Your balance is not enough, Please add more credit";
             }
             else
             {
-
-                auto currentTimePoint = std::chrono::system_clock::now();
-
-                // Convert the time point to a time_t
-                std::time_t currentTime = std::chrono::system_clock::to_time_t(currentTimePoint);
-
-                // Convert time_t to string for display
-                char *timeStr = std::ctime(&currentTime);
-                //std::cout << "Current time: " << timeStr;
                 string title;
                 string description;
 
-                cout << "Enter the title of Request: ";
+                cout << "Enter the title of Request"; // Title of request input from user
                 std::getline(cin >> std::ws, title);
-                cout << "Enter the description of Request: ";
+                cout << "Enter the description of Request"; // Description of request input from user
                 std::getline(cin >> std::ws, description);
                 std::fstream myFile;
-                myFile.open("Request.dat", std::ios::app | std::ios::out);
+                myFile.open("Request.dat", std::ios::app | std::ios::out); // Open a file to save request's information and later used for viewRequest function
                 if (!myFile)
                 {
                     cout << "Fail to open or create file";
                 }
-                myFile << mem.userName << "\n";
+                myFile << mem.userName << "\n"; // Write information into the Request.dat file
                 myFile << userNameSupVal << "\n";
                 myFile << title << "\n";
                 myFile << description << "\n";
-                myFile << timeStr << "\n";
 
-                myFile.close();
-                cout << "send request successfully";
+                myFile.close(); // Close and save file
+                cout << "Send request successfully"; // Notify user that the request is sent successfully
                 break;
             }
         }
     }
 }
 
-// Kiet's Function
 
-bool viewRequest(Member &mem, std::vector<Request> ListofReq)
+
+
+bool viewRequest(Member &mem, std::vector<Request> ListofReq) // Function to view incoming Requests
 
 {
-    string time;
     bool matchFound = false;
-    for (int i = 0; i < ListofReq.size(); i++)
+    for (int i = 0; i < ListofReq.size(); i++) // Loop to check for requests
     {
-        if (mem.userName == ListofReq[i].nameofSupport)
+        if (mem.userName == ListofReq[i].nameofSupport) // Condition to check if the request is sent to the right person and notify them
         {
             matchFound = true;
-            cout << "You recieve a request from " << ListofReq[i].nameOfHost << "\n"
+            cout << "You receive a request from " << ListofReq[i].nameOfHost << "\n" // Print out request information for the supporter
                  << "Title: " << ListofReq[i].title << "\n"
-                 << "Description: " << ListofReq[i].description << "\n"
-                  << "Time: " << ListofReq[i].time << "\n";
+                 << "Description: " << ListofReq[i].description << "\n";
         }
     }
     if (matchFound == true)
@@ -320,23 +309,23 @@ bool viewRequest(Member &mem, std::vector<Request> ListofReq)
     }
     return false;
 }
-int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup)
+int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup) // Function to accept or deny request
 {
     cout << "\n 1 for Accept\n";
     cout << "2 for Deny\n";
     int choice;
     cout << "Enter your choice: ";
     cin >> choice;
-    if (choice == 1)
+    if (choice == 1) // Condition to check for accepted request
     {
-        req.status = "Accpected";
+        req.status = "Accepted";
         std::fstream myFile;
-        myFile.open("AcceptedRequest.dat", std::ios::app | std::ios::out);
+        myFile.open("AcceptedRequest.dat", std::ios::app | std::ios::out); // Open a file and save information for requesting person to check if the supporter has accepted or not
         if (!myFile)
         {
             cout << "Fail to open or create file";
         }
-        myFile << req.nameOfHost << "\n" << req.nameofSupport << "\n" << req.title << " " << req.description << "\n"<<req.time<<"\n"
+        myFile << req.nameOfHost << " " << req.nameofSupport << " " << req.title << " " << req.description << " "
                << req.status;
         myFile.close();
         remove("request.dat");
@@ -346,13 +335,13 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup)
             if (listSup[i].userNameSup == req.nameofSupport)
             {
                 mem.creditPoint += listSup[i].comsumingPointSup;
-                cout << "You recieve " << listSup[i].comsumingPointSup << "CreditPoint\n";
+                cout << "You receive " << listSup[i].comsumingPointSup << "CreditPoint\n"; // Notify users how many credit Points they received for completing the request
             }
         }
 
         return 1;
     }
-    else if (choice == 2)
+    else if (choice == 2) // Condition to check for denied request
     {
         remove("request.dat");
         cout << "Denied Request";
@@ -365,14 +354,14 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup)
     }
 }
 
-bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup)
+bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup) // Function to check for request's status (denied or accepted)
 {
     string nameHostVal;
     string nameSupVal;
     fstream myFile;
-    myFile.open("AcceptedRequest.dat", std::ios::in);
+    myFile.open("AcceptedRequest.dat", std::ios::in); // Open AcceptedRequest.dat that is made if the supporter accepted the request
 
-    if (!myFile)
+    if (!myFile) // Condition to check if file existed or not
     {
         cout << " No data to be found\n";
     }
@@ -386,12 +375,12 @@ bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup)
     {
         remove("AcceptedRequest.dat");
         remove("request.dat");
-        cout << "your request is accepted";
+        cout << "your request is accepted"; // Notify user that their request is accepted
         for (int i = 0; i < listSup.size(); i++)
         {
             if (listSup[i].userNameSup == nameSupVal)
             {
-                cout << "Your credit point is deducted: " << listSup[i].comsumingPointSup << "\n";
+                cout << "Your credit point is deducted: " << listSup[i].comsumingPointSup << "\n"; // Reduce user's credit Points by the supporter's charge rate
             }
         }
 

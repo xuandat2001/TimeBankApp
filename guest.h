@@ -23,9 +23,6 @@ protected:
     string address;
     int creditPoint;
     string skillsInfo;
-    //bool Availability;
-    
-
 public:
     
     Guest();
@@ -45,12 +42,6 @@ public:
     string getAddress();
 
     int getCreditPoint();
-
-
-
-    /*bool getAvailability(){
-        return this->Availability;
-    }*/
 
     string getSkillsInfo();
     friend void registerMember(Guest &guest);

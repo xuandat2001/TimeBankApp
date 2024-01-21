@@ -6,7 +6,6 @@ using namespace std;
 using std::cin;
 using std::cout;
 using std::string;
-
 Guest::Guest() {}
 
 string Guest::getUserName()
@@ -43,9 +42,6 @@ int Guest::getCreditPoint()
 {
     return creditPoint;
 };
-/*bool Guest::getAvailability(){
-    return Availability;
-};*/
 string Guest::getSkillsInfo()
 {
     return skillsInfo;
