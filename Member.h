@@ -46,10 +46,10 @@ public:
     bool block();
     void showInfo();
     void showInfoVip();
-    void rateSupport(Supporter &sup);
     friend int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
     friend void sendRequest(std::vector<Supporter> &listSup, Member &mem);
-    friend int setStatus(Member &mem);
+    friend int setStatus(Member &mem, vector<Supporter> listSup);
+    friend int unlist(Member &mem, vector<Supporter> listSup);
     friend bool viewRequest(Member &mem, std::vector<Request> ListofReq);
     friend int interactRequest(Member &mem, Request &req,std::vector<Supporter> &listSup);
     friend bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);

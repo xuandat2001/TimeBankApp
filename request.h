@@ -14,10 +14,11 @@ private:
     string nameofSupport;
     string title;
     string description;
+    string time;
     string status;
 
 public:
-    Request(string nameofHostVal, string nameofSupportVal, string titleVal, string descriptionVal, string statusVal);
+    Request(string nameofHostVal, string nameofSupportVal, string titleVal, string descriptionVal,string timeVal, string statusVal);
     // void saveData();
     void showRequest();
 

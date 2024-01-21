@@ -6,21 +6,21 @@ void registerMember(Guest &guest)
     fstream myfile;
     cout << "Member's information input: ";
     cout << "\nEnter your username: ";
-    std::getline(cin>>std::ws, guest.userName);
+    std::getline(cin >> std::ws, guest.userName);
     cout << "\nEnter your password: ";
-    std::getline(cin>>std::ws, guest.password);
+    std::getline(cin >> std::ws, guest.password);
     cout << "\nEnter your ID: ";
-    std::getline(cin>>std::ws, guest.memID);
+    std::getline(cin >> std::ws, guest.memID);
     cout << "\nEnter your fullname: ";
-    std::getline(cin>>std::ws, guest.fullName);
+    std::getline(cin >> std::ws, guest.fullName);
     cout << "\nEnter your email: ";
-    std::getline(cin>>std::ws, guest.email);
+    std::getline(cin >> std::ws, guest.email);
     cout << "\nEnter your phoneNumber: ";
     cin >> guest.phoneNumber;
     cout << "\nEnter your address: ";
-    std::getline(cin>>std::ws, guest.address);
+    std::getline(cin >> std::ws, guest.address);
     cout << "\nEnter your skills: ";
-    std::getline(cin>>std::ws, guest.skillsInfo);
+    std::getline(cin >> std::ws, guest.skillsInfo);
     guest.creditPoint = 20;
 
     myfile.open("member.dat", std::ios::app | std::ios::out); // open a file
@@ -62,15 +62,17 @@ void viewSupporters(Guest &guest)
         // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
         while (!myfile.eof())
         { // if not at the end of file
+            std::getline(myfile >> std::ws, guest.userName);
             std::getline(myfile >> std::ws, guest.password);
             std::getline(myfile >> std::ws, guest.memID);
-            std::getline(myfile >> std::ws, guest.userName);
             std::getline(myfile >> std::ws, guest.fullName);
             std::getline(myfile >> std::ws, guest.email);
             myfile >> guest.phoneNumber;
             std::getline(myfile >> std::ws, guest.address);
             std::getline(myfile >> std::ws, guest.skillsInfo);
             myfile >> guest.creditPoint;
+            myfile >> comsumingPoint;
+
             // myfile >> guest.password >> guest.memID >> guest.userName >> guest.fullName >> guest.email >> guest.phoneNumber >> guest.address >> guest.skillsInfo >> guest.creditPoint >> comsumingPoint >> availability;
             cout << "Member No." << totalMembers++ << "\n"; // output to the terminal
             cout << "Username: " << guest.userName << "\n";
@@ -120,23 +122,34 @@ void modifyPassword(Admin &admin)
         cout << "Enter the member number you want to modify: ";
         cin >> memNo;
         myfile1.open("Newmember.dat", std::ios::app | std::ios::out);
-        myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
+        std::getline(myfile >> std::ws, password2);
+        myfile >> memNum2;
+        std::getline(myfile >> std::ws, userName2);
+        std::getline(myfile >> std::ws, fullName2);
+        std::getline(myfile >> std::ws, email2);
+        myfile >> phoneNumber2;
+        std::getline(myfile >> std::ws, address2);
+        std::getline(myfile >> std::ws, skillsInfo2);
+        myfile >> creditPoints2;
+        // myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
         while (!myfile.eof())
         {
-            if (memNo != memNum2)
+            if (memNo == memNum2)
             {
-                myfile1 << password2 << " " << memNum2 << " " << userName2 << " " << fullName2 << " "
-                        << email2 << " " << phoneNumber2 << " " << address2 << " " << skillsInfo2 << creditPoints2 << "\n";
-            }
-            else
-            {
-                cout << "Enter new password :";
+                cout << "Enter new password: ";
                 cin >> password2;
-                myfile1 << password2 << " " << memNum2 << " " << userName2 << " " << fullName2 << " "
-                        << email2 << " " << phoneNumber2 << " " << address2 << " " << skillsInfo2 << creditPoints2 << "\n";
+                myfile1 << password2 << "\n";
+                myfile1 << memNum2 << "\n";
+                myfile1 << userName2 << "\n";
+                myfile1 << fullName2 << "\n";
+                myfile1 << email2 << "\n";
+                myfile1 << phoneNumber2 << "\n";
+                myfile1 << address2 << "\n";
+                myfile1 << skillsInfo2 << "\n";
+                myfile1 << creditPoints2 << "\n";
                 found++;
             }
-            myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
+            // myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
             if (found == 0)
             {
                 cout << "Member not found.";
@@ -162,56 +175,49 @@ int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordV
     return -1;
 };
 
-int setStatus(Member &mem)
+int setStatus(Member &mem, vector<Supporter> listSup)
 {
-    int choice;
-    cout << "Set your status\n";
-    cout << "1 for On\n";
-    cout << "2 for Off\n";
-    cout << "Enter ur choice: ";
-    cin >> choice;
-    if (choice == 1)
-    {
-        mem.availability == true; // mode on
-        cout << "Enter your consuming point: ";
-        cin >> mem.comsumingPoint;
-        fstream myfile;                                               // create a file to store all the infor of a member as a supporter
-        myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
-        if (!myfile)
-        {
-            cout << " Fail to open/create a file\n";
-        }
-        myfile<<mem.userName<<"\n";
-        myfile<<mem.password<<"\n";
-        myfile<<mem.id<<"\n";
-        myfile<<mem.fullName<<"\n";
-        myfile<<mem.email<<"\n";
-        myfile<<mem.phoneNumber<<"\n";
-        myfile<<mem.address<<"\n";
-        myfile<<mem.skillsInfo<<"\n";
-        myfile<<mem.creditPoint<<"\n";
-        myfile<<mem.comsumingPoint<<"\n";
-        //myfile << mem.userName << " " << mem.password << " " << mem.id << " " 
-        //<< mem.fullName << " " << mem.email << " " << mem.phoneNumber << " " 
-        //<< mem.address << " " << mem.skillsInfo << " " << mem.creditPoint << " " 
-        //<< mem.comsumingPoint << " " << mem.availability << "\n";
-        myfile.close();
-        cout << "You are ready to be booked\n";
-        return 1;
-    }
-    else if (choice == 2)
-    {
-        mem.availability == false; // mode off
-        cout << "You turn off mode Supporter";
-        return 2;
-    }
-    else
-    {
-        cout << "Invalid value";
-        return -1;
-    }
-};
 
+    mem.availability == true; // mode on
+    cout << "Enter your consuming point: ";
+    cin >> mem.comsumingPoint;
+    fstream myfile;                                               // create a file to store all the infor of a member as a supporter
+    myfile.open("supporters.dat", std::ios::app | std::ios::out); // open a file
+    if (!myfile)
+    {
+        cout << " Fail to open/create a file\n";
+    }
+    myfile << mem.userName << "\n";
+    myfile << mem.password << "\n";
+    myfile << mem.id << "\n";
+    myfile << mem.fullName << "\n";
+    myfile << mem.email << "\n";
+    myfile << mem.phoneNumber << "\n";
+    myfile << mem.address << "\n";
+    myfile << mem.skillsInfo << "\n";
+    myfile << mem.creditPoint << "\n";
+    myfile << mem.comsumingPoint << "\n";
+    // myfile << mem.userName << " " << mem.password << " " << mem.id << " "
+    //<< mem.fullName << " " << mem.email << " " << mem.phoneNumber << " "
+    //<< mem.address << " " << mem.skillsInfo << " " << mem.creditPoint << " "
+    //<< mem.comsumingPoint << " " << mem.availability << "\n";
+    myfile.close();
+    cout << "You are ready to be booked\n";
+    return 1;
+};
+int unlist(Member &mem, vector<Supporter> listSup)
+{
+    mem.availability == false; // mode off
+    for (int i = 0; i < listSup.size(); i++)
+    {
+        if (mem.userName == listSup[i].userNameSup)
+        {
+            return i;
+        }
+    }
+    cout << "You're a Supporter yet \n";
+    return -1;
+}
 void search(string cityName, int creditPointCondition, vector<Supporter> listSup)
 {
 
@@ -246,6 +252,15 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
             }
             else
             {
+
+                auto currentTimePoint = std::chrono::system_clock::now();
+
+                // Convert the time point to a time_t
+                std::time_t currentTime = std::chrono::system_clock::to_time_t(currentTimePoint);
+
+                // Convert time_t to string for display
+                char *timeStr = std::ctime(&currentTime);
+                //std::cout << "Current time: " << timeStr;
                 string title;
                 string description;
 
@@ -263,6 +278,7 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
                 myFile << userNameSupVal << "\n";
                 myFile << title << "\n";
                 myFile << description << "\n";
+                myFile << timeStr << "\n";
 
                 myFile.close();
                 cout << "send request successfully";
@@ -277,6 +293,7 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
 bool viewRequest(Member &mem, std::vector<Request> ListofReq)
 
 {
+    string time;
     bool matchFound = false;
     for (int i = 0; i < ListofReq.size(); i++)
     {
@@ -285,7 +302,8 @@ bool viewRequest(Member &mem, std::vector<Request> ListofReq)
             matchFound = true;
             cout << "You recieve a request from " << ListofReq[i].nameOfHost << "\n"
                  << "Title: " << ListofReq[i].title << "\n"
-                 << "Description: " << ListofReq[i].description << "\n";
+                 << "Description: " << ListofReq[i].description << "\n"
+                  << "Time: " << ListofReq[i].time << "\n";
         }
     }
     if (matchFound == true)
@@ -386,8 +404,20 @@ bool perfomeTopUp(Member &mem)
     {
 
         mem.creditPoint += money;
-        cout << "Payment successful\n";
 
+        string userNameNew;
+        string passwordNew;
+        string idNew;
+        string fullNameNew;
+        string emailNew;
+        string phoneNumberNew;
+        string addressNew;
+        string creditPointNew;
+        string skillsInfoNew;
+        fstream newFile;
+        // newFile.open("NewMember.dat", std::ios::app | std::ios::out);
+
+        cout << "Payment successful\n";
         return true;
     }
     else

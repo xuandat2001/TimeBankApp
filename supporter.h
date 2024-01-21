@@ -52,6 +52,8 @@ public:
     // void rateMember(Member &host);
     friend class Member;
     friend void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
+    friend int setStatus(Member &mem, vector<Supporter> listSup);
+    friend int unlist(Member &mem, vector<Supporter> listSup);
     friend void sendRequest(std::vector<Supporter> &listSup, Member &mem);
     friend int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup);
     friend bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);

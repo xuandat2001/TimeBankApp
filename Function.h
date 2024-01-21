@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <iostream>
+#include <chrono>
+#include <ctime>
 #include "supporter.h"
 #include "Member.h"
 #include "request.h"
@@ -17,7 +20,8 @@ void modifyPassword(Admin &admin);
 void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
 void sendRequest(std::vector<Supporter> &listSup, Member &mem);
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
-int setStatus(Member &mem);
+int setStatus(Member &mem, vector<Supporter> listSup);
+int unlist(Member &mem, vector<Supporter> listSup);
 bool viewRequest(Member &mem, std::vector<Request> ListofReq);
 int interactRequest(Member &mem, Request &req,std::vector<Supporter> &listSup);
 bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup);

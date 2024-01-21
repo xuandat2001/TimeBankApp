@@ -56,7 +56,8 @@ int main()
             {
                 viewSupporters(Guests);
             }
-            else if(choice1==0){
+            else if (choice1 == 0)
+            {
                 break;
             }
             else
@@ -100,7 +101,7 @@ int main()
                     std::getline(myfile >> std::ws, address);
                     std::getline(myfile >> std::ws, skillsInfo);
                     std::getline(myfile >> std::ws, creditPoint);
-                     //myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
+                    // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
                     Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
                                std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability); // take data from file and assign to variables
                     ListofMember.push_back(mem);
@@ -138,20 +139,20 @@ int main()
             {
                 while (!Supfile.eof())
                 {
-                    std::getline(Supfile>>std::ws, userNameSup);
-                    std::getline(Supfile>>std::ws, passwordSup);
-                    std::getline(Supfile>>std::ws, idSup);
-                    std::getline(Supfile>>std::ws, fullNameSup);
-                    std::getline(Supfile>>std::ws, emailSup);
-                    std::getline(Supfile>>std::ws, phoneNumberSup);
-                    std::getline(Supfile>>std::ws, addressSup);
-                    std::getline(Supfile>>std::ws, skillsInfoSup);
-                    std::getline(Supfile>>std::ws, creditPointSup);
-                    std::getline(Supfile>>std::ws, comsumingPointSup);
-                    
-                    //Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
-                    // Create a Member object
-                    // Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
+                    std::getline(Supfile >> std::ws, userNameSup);
+                    std::getline(Supfile >> std::ws, passwordSup);
+                    std::getline(Supfile >> std::ws, idSup);
+                    std::getline(Supfile >> std::ws, fullNameSup);
+                    std::getline(Supfile >> std::ws, emailSup);
+                    std::getline(Supfile >> std::ws, phoneNumberSup);
+                    std::getline(Supfile >> std::ws, addressSup);
+                    std::getline(Supfile >> std::ws, skillsInfoSup);
+                    std::getline(Supfile >> std::ws, creditPointSup);
+                    std::getline(Supfile >> std::ws, comsumingPointSup);
+
+                    // Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
+                    //  Create a Member object
+                    //  Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
 
                     // Create a Supporter object and add it to the list
                     Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, std::stod(phoneNumberSup), addressSup, std::stod(creditPointSup), skillsInfoSup, hostRatingScoreVal, std::stod(comsumingPointSup), availabilityVal, reviewSup, skillScore, supporterScore);
@@ -166,6 +167,7 @@ int main()
             string supName;
             string title;
             string description;
+            string time;
             string status = "";
             fstream myFile;
             myFile.open("Request.dat", std::ios::in);
@@ -182,8 +184,9 @@ int main()
                     std::getline(myFile >> std::ws, supName);
                     std::getline(myFile >> std::ws, title);
                     std::getline(myFile >> std::ws, description);
+                    std::getline(myFile >> std::ws, time);
                 }
-                Request req(hostName, supName, title, description, status);
+                Request req(hostName, supName, title, description,time, status);
                 ListofReq.push_back(req);
             }
             myFile.close();
@@ -236,7 +239,23 @@ int main()
                         }
                         else if (choice == 2)
                         {
-                            setStatus(foundMember);
+                            int choice;
+                            cout << "Set your status\n";
+                            cout << "1 for On\n";
+                            cout << "2 for Off\n";
+                            cout << "Enter ur choice: ";
+                            cin >> choice;
+                            if (choice == 1)
+                            {
+                                setStatus(foundMember, ListofSup);
+                            }
+                            else if(choice==2){
+                                int SupIndex = unlist(foundMember, ListofSup);
+                                ListofSup.erase(ListofSup.begin() + SupIndex);
+                                 cout << "You turn off mode Supporter\n";
+                            }
+                            
+                            
                         }
 
                         else if (choice == 3)
@@ -315,8 +334,7 @@ int main()
                             cin >> supporterScore;
                             cout << "Enter your comment: ";
                             std::getline(cin >> std::ws, comment);
-                            rateSupport(nameOfSup,skillScore,supporterScore,comment,ListofSup);
-
+                            rateSupport(nameOfSup, skillScore, supporterScore, comment, ListofSup);
                         }
                         else if (choice == 0)
                         {
