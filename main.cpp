@@ -22,7 +22,7 @@ int main()
     cout << "EEET2482/COSC2082 ASSIGNMENT\n"
          << "TIME BANK APPLICATION\n"
          << "Instructor: Mr. Tran Duc Linh\n"
-         << "Group: Group No.\n"
+         << "Group: Group 16.\n"
          << "s3979802, NGUYEN HAI LAM\n"
          << "s3970891, PHAM QUANG HUY\n"
          << "s3993986, HONG THIEU KIET\n"

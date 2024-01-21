@@ -1,8 +1,9 @@
 #include "Function.h"
 
 // LAm's Functions
-void registerMember(Guest &guest)
+void registerMember(Guest &guest) //  register Function
 {
+    // store the infor of guest
     fstream myfile;
     cout << "Member's information input: ";
     cout << "\nEnter your username: ";
@@ -22,9 +23,13 @@ void registerMember(Guest &guest)
     cout << "\nEnter your skills: ";
     std::getline(cin >> std::ws, guest.skillsInfo);
     guest.creditPoint = 20;
-
+    
     myfile.open("member.dat", std::ios::app | std::ios::out); // open a file
-
+    if (!myfile)
+    {
+        std::cerr<<"Fail to open/create the file";
+    }
+     // save data to file
     myfile << guest.password << "\n";
     myfile << guest.memID << "\n";
     myfile << guest.userName << "\n";
@@ -34,14 +39,16 @@ void registerMember(Guest &guest)
     myfile << guest.address << "\n";
     myfile << guest.skillsInfo << "\n";
     myfile << guest.creditPoint << "\n";
-    // myfile << guest.password << " " << guest.memID << " " << guest.userName << " " << guest.fullName << " " << guest.email << " " << guest.phoneNumber << " " << guest.address << " " << guest.skillsInfo << " " << guest.creditPoint << "\n"; // save data to file
+    
     myfile.close();
 
     cout << "Your credit points is added to a total of: " << guest.creditPoint << "\n"
          << "You have registered successfully.\n";
 }
 
-void viewSupporters(Guest &guest)
+
+//view Supporters
+void viewSupporters(Guest &guest) 
 {
 
     int totalMembers = 0;
@@ -50,7 +57,7 @@ void viewSupporters(Guest &guest)
     bool availability;
     fstream myfile;
 
-    myfile.open("supporters.dat", std::ios::in);
+    myfile.open("supporters.dat", std::ios::in); //open the file
 
     if (!myfile)
     {
@@ -59,9 +66,10 @@ void viewSupporters(Guest &guest)
     else
     {
         std::string line;
-        // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //take data from file and assign to variables
-        while (!myfile.eof())
-        { // if not at the end of file
+         
+        while (!myfile.eof())// if not at the end of file
+        { 
+        //take data from file and assign to variables
             std::getline(myfile >> std::ws, guest.userName);
             std::getline(myfile >> std::ws, guest.password);
             std::getline(myfile >> std::ws, guest.memID);
@@ -73,8 +81,8 @@ void viewSupporters(Guest &guest)
             myfile >> guest.creditPoint;
             myfile >> comsumingPoint;
 
-            // myfile >> guest.password >> guest.memID >> guest.userName >> guest.fullName >> guest.email >> guest.phoneNumber >> guest.address >> guest.skillsInfo >> guest.creditPoint >> comsumingPoint >> availability;
-            cout << "Member No." << totalMembers++ << "\n"; // output to the terminal
+           // output to the terminal
+            cout << "Member No." << totalMembers++ << "\n"; 
             cout << "Username: " << guest.userName << "\n";
             cout << "Member ID: " << guest.memID << "\n";
             cout << "Full name: " << guest.fullName << "\n";
@@ -84,7 +92,7 @@ void viewSupporters(Guest &guest)
             cout << "Skills: " << guest.skillsInfo << "\n";
             cout << "Credit points: " << guest.creditPoint << "\n";
             cout << endl;
-            // myfile >> password >> memID >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo >> creditPoint; //assign again to terminate the loop
+           
         }
         if (totalMembers == 0)
         { // check if there is no data input ever before
@@ -123,14 +131,14 @@ void modifyPassword()
 
         myfile1.open("Newmember.dat", std::ios::app | std::ios::out);
 
-        while (myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2)
+        while (myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2)// the condition 
         {
             if (memNo == memNum2)
             {
                 string password3;
                 cout << "Enter new password: ";
                 cin >> password3;
-
+                // store the data to new file
                 myfile1 << password3 << "\n";
                 myfile1 << memNum2 << "\n";
                 myfile1 << userName2 << "\n";
@@ -165,11 +173,14 @@ void modifyPassword()
         myfile.close();
         myfile1.close();
 
-        remove("member.dat");
-        rename("Newmember.dat", "member.dat");
+        remove("member.dat"); //remove old file
+        rename("Newmember.dat", "member.dat"); // rename new file
     }
 }
-// Huy's Funtions
+
+
+
+//login Function
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)
 {
     for (int i = 0; i < ListofMem.size(); i++)
@@ -183,6 +194,8 @@ int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordV
     return -1;
 };
 
+
+//Set status fucntion
 int setStatus(Member &mem, vector<Supporter> listSup)
 {
 
@@ -205,20 +218,19 @@ int setStatus(Member &mem, vector<Supporter> listSup)
     myfile << mem.skillsInfo << "\n";
     myfile << mem.creditPoint << "\n";
     myfile << mem.comsumingPoint << "\n";
-    // myfile << mem.userName << " " << mem.password << " " << mem.id << " "
-    //<< mem.fullName << " " << mem.email << " " << mem.phoneNumber << " "
-    //<< mem.address << " " << mem.skillsInfo << " " << mem.creditPoint << " "
-    //<< mem.comsumingPoint << " " << mem.availability << "\n";
+
     myfile.close();
     cout << "You are ready to be booked\n";
     return 1;
 };
+
+//unlist function
 int unlist(Member &mem, vector<Supporter> listSup)
 {
     mem.availability == false; // mode off
     for (int i = 0; i < listSup.size(); i++)
     {
-        if (mem.userName == listSup[i].userNameSup)
+        if (mem.userName == listSup[i].userNameSup)// chech username
         {
             return i;
         }
@@ -226,6 +238,9 @@ int unlist(Member &mem, vector<Supporter> listSup)
     cout << "You're a Supporter yet \n";
     return -1;
 }
+
+
+//search function
 void search(string cityName, Member &mem, vector<Supporter> listSup)
 {
 
@@ -242,7 +257,9 @@ void search(string cityName, Member &mem, vector<Supporter> listSup)
         }
     }
 }
-// Kiet's Function
+
+
+//send Request Fucntion
 void sendRequest(std::vector<Supporter> &listSup, Member &mem) // Function to send request to the chosen supporter
 {
     string userNameSupVal;
@@ -251,7 +268,7 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem) // Function to se
     for (int i = 0; i < listSup.size(); i++)
     {
 
-        if (userNameSupVal == listSup[i].userNameSup) // Check for correct supporter to retrieve information from
+        if (mem.block() != true && userNameSupVal == listSup[i].userNameSup) // Check for correct supporter to retrieve information from
         {
             listSup[i].requirementSup();
             if (listSup[i].comsumingPointSup > mem.creditPoint) // Check for valid credit Points to send request
@@ -260,26 +277,36 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem) // Function to se
             }
             else
             {
+
+                auto currentTimePoint = std::chrono::system_clock::now(); // get the current time
+
+                // Convert the time point to a time_t
+                std::time_t currentTime = std::chrono::system_clock::to_time_t(currentTimePoint);
+
+                // Convert time_t to string for display
+                char *timeStr = std::ctime(&currentTime); // convert the time
                 string title;
                 string description;
 
-                cout << "Enter the title of Request"; // Title of request input from user
+                cout << "Enter the title of Request: ";
                 std::getline(cin >> std::ws, title);
-                cout << "Enter the description of Request"; // Description of request input from user
+                cout << "Enter the description of Request: ";
                 std::getline(cin >> std::ws, description);
                 std::fstream myFile;
-                myFile.open("Request.dat", std::ios::app | std::ios::out); // Open a file to save request's information and later used for viewRequest function
+                myFile.open("Request.dat", std::ios::app | std::ios::out);// Open a file to save request's information and later used for viewRequest function
                 if (!myFile)
                 {
                     cout << "Fail to open or create file";
                 }
-                myFile << mem.userName << "\n"; // Write information into the Request.dat file
+                // Write information into the Request.dat file
+                myFile << mem.userName << "\n";
                 myFile << userNameSupVal << "\n";
                 myFile << title << "\n";
                 myFile << description << "\n";
+                myFile << timeStr << "\n";
 
-                myFile.close(); // Close and save file
-                cout << "Send request successfully"; // Notify user that the request is sent successfully
+                myFile.close();
+                cout << "send request successfully"; // Notify user that the request is sent successfully
                 break;
             }
         }
@@ -288,19 +315,21 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem) // Function to se
 
 
 
-
 bool viewRequest(Member &mem, std::vector<Request> ListofReq) // Function to view incoming Requests
 
 {
+    string time;
     bool matchFound = false;
-    for (int i = 0; i < ListofReq.size(); i++) // Loop to check for requests
+    for (int i = 0; i < ListofReq.size(); i++)  // Loop to check for requests
     {
         if (mem.userName == ListofReq[i].nameofSupport) // Condition to check if the request is sent to the right person and notify them
         {
             matchFound = true;
-            cout << "You receive a request from " << ListofReq[i].nameOfHost << "\n" // Print out request information for the supporter
+            // Print out request information for the supporter
+            cout << "You recieve a request from " << ListofReq[i].nameOfHost << "\n"
                  << "Title: " << ListofReq[i].title << "\n"
-                 << "Description: " << ListofReq[i].description << "\n";
+                 << "Description: " << ListofReq[i].description << "\n"
+                  << "Time: " << ListofReq[i].time << "\n";
         }
     }
     if (matchFound == true)
@@ -316,16 +345,16 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup) 
     int choice;
     cout << "Enter your choice: ";
     cin >> choice;
-    if (choice == 1) // Condition to check for accepted request
+    if (choice == 1)// Condition to check for accepted request
     {
-        req.status = "Accepted";
+        req.status = "Accpected";
         std::fstream myFile;
-        myFile.open("AcceptedRequest.dat", std::ios::app | std::ios::out); // Open a file and save information for requesting person to check if the supporter has accepted or not
+        myFile.open("AcceptedRequest.dat", std::ios::app | std::ios::out);// Open a file and save information for requesting person to check if the supporter has accepted or not
         if (!myFile)
         {
             cout << "Fail to open or create file";
         }
-        myFile << req.nameOfHost << " " << req.nameofSupport << " " << req.title << " " << req.description << " "
+        myFile << req.nameOfHost << "\n" << req.nameofSupport << "\n" << req.title << " " << req.description << "\n"<<req.time<<"\n"
                << req.status;
         myFile.close();
         remove("request.dat");
@@ -335,13 +364,13 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup) 
             if (listSup[i].userNameSup == req.nameofSupport)
             {
                 mem.creditPoint += listSup[i].comsumingPointSup;
-                cout << "You receive " << listSup[i].comsumingPointSup << "CreditPoint\n"; // Notify users how many credit Points they received for completing the request
+                cout << "You recieve " << listSup[i].comsumingPointSup << "CreditPoint\n";// Notify users how many credit Points they received for completing the request
             }
         }
 
         return 1;
     }
-    else if (choice == 2) // Condition to check for denied request
+    else if (choice == 2)// Condition to check for denied request
     {
         remove("request.dat");
         cout << "Denied Request";
@@ -354,14 +383,14 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup) 
     }
 }
 
-bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup) // Function to check for request's status (denied or accepted)
+bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup)// Function to check for request's status (denied or accepted)
 {
     string nameHostVal;
     string nameSupVal;
     fstream myFile;
-    myFile.open("AcceptedRequest.dat", std::ios::in); // Open AcceptedRequest.dat that is made if the supporter accepted the request
+    myFile.open("AcceptedRequest.dat", std::ios::in);// Open AcceptedRequest.dat that is made if the supporter accepted the request
 
-    if (!myFile) // Condition to check if file existed or not
+    if (!myFile)
     {
         cout << " No data to be found\n";
     }
@@ -380,7 +409,7 @@ bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup) // Functio
         {
             if (listSup[i].userNameSup == nameSupVal)
             {
-                cout << "Your credit point is deducted: " << listSup[i].comsumingPointSup << "\n"; // Reduce user's credit Points by the supporter's charge rate
+                cout << "Your credit point is deducted: " << listSup[i].comsumingPointSup << "\n";// Reduce user's credit Points by the supporter's charge rate
             }
         }
 
@@ -390,9 +419,8 @@ bool checkStatusRequest(Member &mem, std::vector<Supporter> &listSup) // Functio
 };
 
 // Dat's Function
-bool perfomeTopUp(Member &mem)
+bool perfomeTopUp(Member &mem) // add money 
 {
-    string userName;
     cout << "\n Convert from $->Credit Point: 1$->1 CreditPoint\n";
     int money;
     cout << "Enter the money: ";
@@ -400,20 +428,7 @@ bool perfomeTopUp(Member &mem)
     if (money > 0)
     {
 
-        mem.creditPoint += money;
-
-        string userNameNew;
-        string passwordNew;
-        string idNew;
-        string fullNameNew;
-        string emailNew;
-        string phoneNumberNew;
-        string addressNew;
-        string creditPointNew;
-        string skillsInfoNew;
-        fstream newFile;
-        // newFile.open("NewMember.dat", std::ios::app | std::ios::out);
-
+        mem.creditPoint += money; // add money
         cout << "Payment successful\n";
         mem.showInfo();
         return true;
@@ -424,7 +439,7 @@ bool perfomeTopUp(Member &mem)
         return false;
     }
 }
-
+ // rate Host Function
 void rateMember(Member &mem, string &nameOfHost, int &score)
 {
     if (nameOfHost == mem.userName)
@@ -434,6 +449,7 @@ void rateMember(Member &mem, string &nameOfHost, int &score)
     }
 };
 
+//view Member Function
 void viewSpecificMem(string &nameOfMem, Member &mem)
 {
     if (mem.block() != true && nameOfMem == mem.userName)
@@ -456,6 +472,8 @@ void viewSpecificMem(string &nameOfMem, Member &mem)
     }
 };
 
+
+//block Function
 bool blockMember(Member &mem, std::vector<Member> ListofMem)
 {
     bool status = false;
@@ -477,6 +495,8 @@ bool blockMember(Member &mem, std::vector<Member> ListofMem)
     }
     return false;
 }
+
+//rateSupport Function
 void rateSupport(string nameOfSup, int &skillScore, int &supporterscore, string &comment, std::vector<Supporter> &listSup)
 {
     for (int i = 0; i < listSup.size(); i++)
