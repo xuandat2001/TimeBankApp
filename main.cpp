@@ -19,7 +19,6 @@ int main()
     std::vector<Request> ListofReq;
     Guest Guests;
     Admin admin;
-    // ListofMember.push_back(mem.getInfo())
     cout << "EEET2482/COSC2082 ASSIGNMENT\n"
          << "TIME BANK APPLICATION\n"
          << "Instructor: Mr. Tran Duc Linh\n"
@@ -101,7 +100,6 @@ int main()
                     std::getline(myfile >> std::ws, address);
                     std::getline(myfile >> std::ws, skillsInfo);
                     std::getline(myfile >> std::ws, creditPoint);
-                    // myfile >> password >> id >> userName >> fullName >> email >> phoneNumber >> address >> skillsInfo>> creditPoint;
                     Member mem(userName, password, id, fullName, email, std::stod(phoneNumber), address,
                                std::stod(creditPoint), skillsInfo, hostRatingScore, comsumingPoint, availability); // take data from file and assign to variables
                     ListofMember.push_back(mem);
@@ -149,11 +147,6 @@ int main()
                     std::getline(Supfile >> std::ws, skillsInfoSup);
                     std::getline(Supfile >> std::ws, creditPointSup);
                     std::getline(Supfile >> std::ws, comsumingPointSup);
-
-                    // Supfile >> userNameSup >> passwordSup >> idSup >> fullNameSup >> emailSup >> phoneNumberSup >> addressSup >> skillsInfoSup >> creditPointSup >> comsumingPointSup >> availabilityVal;
-                    //  Create a Member object
-                    //  Member baseMember(userNameSup, passwordSup, idSup, fullNameSup, emailSup, phoneNumberSup, addressSup, creditPointSup, skillsInfoSup, hostRatingScoreVal, comsumingPointSup, availabilityVal);
-
                     // Create a Supporter object and add it to the list
                     Supporter singleSupporter(userNameSup, passwordSup, idSup, fullNameSup, emailSup, std::stod(phoneNumberSup), addressSup, std::stod(creditPointSup), skillsInfoSup, hostRatingScoreVal, std::stod(comsumingPointSup), availabilityVal, reviewSup, skillScore, supporterScore);
                     ListofSup.push_back(singleSupporter);
@@ -212,7 +205,7 @@ int main()
                     {
                         Member foundMember = ListofMember[static_cast<size_t>(foundMemberIndex)];
                         cout << "Login successful\n";
-                        int choice; // get choice from user
+                        int choiceMem; // get choice from user
                         cout << "This is your menu:\n"
                              << "0. Exit\n"
                              << "1. Show Information\n"
@@ -227,18 +220,18 @@ int main()
                              << "10. View Specific Member\n"
                              << "11. Rate Supporter\n";
                         cout << "Enter your choice: ";
-                        cin >> choice;
+                        cin >> choiceMem;
                         // loop through all member in list
-                        if (choice == 7)
+                        if (choiceMem == 7)
                         {
                             perfomeTopUp(foundMember);
                             
                         }
-                        else if (choice == 1)
+                        else if (choiceMem == 1)
                         {
                             foundMember.showInfo(); // call function
                         }
-                        else if (choice == 2)
+                        else if (choiceMem == 2)
                         {
                             int choice;
                             cout << "Set your status\n";
@@ -250,7 +243,7 @@ int main()
                             {
                                 setStatus(foundMember, ListofSup);
                             }
-                            else if(choice==2){
+                            else if(choiceMem==2){
                                 int SupIndex = unlist(foundMember, ListofSup);
                                 ListofSup.erase(ListofSup.begin() + SupIndex);
                                  cout << "You turn off mode Supporter\n";
@@ -259,7 +252,7 @@ int main()
                             
                         }
 
-                        else if (choice == 3)
+                        else if (choiceMem == 3)
                         {
                             string cityName;
                             int creditPoint;
@@ -272,11 +265,11 @@ int main()
                             // cin >> hostRatingScore;
                             search(cityName, creditPoint, ListofSup); // call function
                         }
-                        else if (choice == 4)
+                        else if (choiceMem == 4)
                         {
                             sendRequest(ListofSup, foundMember); // call function
                         }
-                        else if (choice == 5)
+                        else if (choiceMem == 5)
                         {
                             for (int i = 0; i < ListofReq.size(); i++)
                             {
@@ -291,11 +284,11 @@ int main()
                                 }
                             }
                         }
-                        else if (choice == 6)
+                        else if (choiceMem == 6)
                         {
                             checkStatusRequest(foundMember, ListofSup);
                         }
-                        else if (choice == 8)
+                        else if (choiceMem == 8)
                         {
                             cout<<"Please rate your host from 1 to 5\n";
                             int score;
@@ -309,11 +302,11 @@ int main()
                                 rateMember(ListofMember[i], nameOfHost, score);
                             }
                         }
-                        else if (choice == 9)
+                        else if (choiceMem == 9)
                         {
                             blockMember(foundMember, ListofMember);
                         }
-                        else if (choice == 10)
+                        else if (choiceMem == 10)
                         {
                             string nameOfMem;
                             cout << "Enter name of member: ";
@@ -323,7 +316,7 @@ int main()
                                 viewSpecificMem(nameOfMem, ListofMember[i]);
                             }
                         }
-                        else if (choice == 11)
+                        else if (choiceMem == 11)
                         {
                             string nameOfSup;
                             cout << "Enter name of member: ";
@@ -338,7 +331,7 @@ int main()
                             std::getline(cin >> std::ws, comment);
                             rateSupport(nameOfSup, skillScore, supporterScore, comment, ListofSup);
                         }
-                        else if (choice == 0)
+                        else if (choiceMem == 0)
                         {
                             cout << "\nExit. Return to the Login Section!\n";
                             break;
@@ -384,15 +377,6 @@ int main()
                 {
                     cout << "Sign in successfully \n";
 
-                    /*int memNumber;
-                    int memNum = Guests.getMemNum();
-                    cout << "Which member's password to change? \n" << "Input member number: ";
-                    cin >> memNumber;
-                    if (memNumber == memNum){
-                        admin.modifyPassword();
-                    } else {
-                        cout << "Member may not exist. Please enter again. \n";
-                    }*/
                     int choice2;
                     cout << "This is your menu:\n"
                          << "0. Exit\n"
