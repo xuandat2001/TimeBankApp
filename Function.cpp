@@ -94,17 +94,16 @@ void viewSupporters(Guest &guest)
     myfile.close();
 }
 
-void modifyPassword(Admin &admin)
+void modifyPassword()
 {
-    Guest guest2;
-    string userName2 = guest2.getUserName();
-    string password2 = guest2.getPassword();
-    string fullName2 = guest2.getFullName();
-    string email2 = guest2.getEmail();
-    int phoneNumber2 = guest2.getPhoneNumber();
-    string address2 = guest2.getAddress();
-    int creditPoints2 = guest2.getCreditPoint();
-    string skillsInfo2 = guest2.getSkillsInfo();
+    string userName2;
+    string password2;
+    string fullName2;
+    string email2;
+    int phoneNumber2;
+    string address2;
+    int creditPoints2;
+    string skillsInfo2;
     int memNum2;
     int found = 0; // variable to check for found result
     fstream myfile, myfile1;
@@ -121,24 +120,18 @@ void modifyPassword(Admin &admin)
         int memNo;
         cout << "Enter the member number you want to modify: ";
         cin >> memNo;
+
         myfile1.open("Newmember.dat", std::ios::app | std::ios::out);
-        std::getline(myfile >> std::ws, password2);
-        myfile >> memNum2;
-        std::getline(myfile >> std::ws, userName2);
-        std::getline(myfile >> std::ws, fullName2);
-        std::getline(myfile >> std::ws, email2);
-        myfile >> phoneNumber2;
-        std::getline(myfile >> std::ws, address2);
-        std::getline(myfile >> std::ws, skillsInfo2);
-        myfile >> creditPoints2;
-        // myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
-        while (!myfile.eof())
+
+        while (myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2)
         {
             if (memNo == memNum2)
             {
+                string password3;
                 cout << "Enter new password: ";
-                cin >> password2;
-                myfile1 << password2 << "\n";
+                cin >> password3;
+
+                myfile1 << password3 << "\n";
                 myfile1 << memNum2 << "\n";
                 myfile1 << userName2 << "\n";
                 myfile1 << fullName2 << "\n";
@@ -149,17 +142,32 @@ void modifyPassword(Admin &admin)
                 myfile1 << creditPoints2 << "\n";
                 found++;
             }
-            // myfile >> password2 >> memNum2 >> userName2 >> fullName2 >> email2 >> phoneNumber2 >> address2 >> skillsInfo2 >> creditPoints2;
-            if (found == 0)
+            else
             {
-                cout << "Member not found.";
+                // If the member number does not match, write the data back to the new file
+                myfile1 << password2 << "\n";
+                myfile1 << memNum2 << "\n";
+                myfile1 << userName2 << "\n";
+                myfile1 << fullName2 << "\n";
+                myfile1 << email2 << "\n";
+                myfile1 << phoneNumber2 << "\n";
+                myfile1 << address2 << "\n";
+                myfile1 << skillsInfo2 << "\n";
+                myfile1 << creditPoints2 << "\n";
             }
         }
+
+        if (found == 0)
+        {
+            cout << "Member not found.";
+        }
+
+        myfile.close();
+        myfile1.close();
+
+        remove("member.dat");
+        rename("Newmember.dat", "member.dat");
     }
-    myfile1.close();
-    myfile.close();
-    remove("member.dat");
-    rename("Newmember.dat", "member.dat");
 }
 // Huy's Funtions
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal)
@@ -243,7 +251,7 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
     for (int i = 0; i < listSup.size(); i++)
     {
 
-        if (userNameSupVal == listSup[i].userNameSup)
+        if (mem.block() != true && userNameSupVal == listSup[i].userNameSup)
         {
             listSup[i].requirementSup();
             if (listSup[i].comsumingPointSup > mem.creditPoint)
@@ -264,9 +272,9 @@ void sendRequest(std::vector<Supporter> &listSup, Member &mem)
                 string title;
                 string description;
 
-                cout << "Enter the title of Request";
+                cout << "Enter the title of Request: ";
                 std::getline(cin >> std::ws, title);
-                cout << "Enter the description of Request";
+                cout << "Enter the description of Request: ";
                 std::getline(cin >> std::ws, description);
                 std::fstream myFile;
                 myFile.open("Request.dat", std::ios::app | std::ios::out);
@@ -328,7 +336,7 @@ int interactRequest(Member &mem, Request &req, std::vector<Supporter> &listSup)
         {
             cout << "Fail to open or create file";
         }
-        myFile << req.nameOfHost << " " << req.nameofSupport << " " << req.title << " " << req.description << " "
+        myFile << req.nameOfHost << "\n" << req.nameofSupport << "\n" << req.title << " " << req.description << "\n"<<req.time<<"\n"
                << req.status;
         myFile.close();
         remove("request.dat");
@@ -418,6 +426,7 @@ bool perfomeTopUp(Member &mem)
         // newFile.open("NewMember.dat", std::ios::app | std::ios::out);
 
         cout << "Payment successful\n";
+        mem.showInfo();
         return true;
     }
     else
@@ -488,7 +497,7 @@ void rateSupport(string nameOfSup, int &skillScore, int &supporterscore, string 
             listSup[i].reviewSup.push_back(comment);
             listSup[i].skillScore = skillScore;
             listSup[i].supporterScore = supporterscore;
-            cout << "Rate Successfully";
+            cout << "Rate Successfully\n";
         }
     }
 };

@@ -232,6 +232,7 @@ int main()
                         if (choice == 7)
                         {
                             perfomeTopUp(foundMember);
+                            
                         }
                         else if (choice == 1)
                         {
@@ -296,6 +297,7 @@ int main()
                         }
                         else if (choice == 8)
                         {
+                            cout<<"Please rate your host from 1 to 5\n";
                             int score;
                             string nameOfHost;
                             cout << "Enter name of your host: ";
@@ -395,10 +397,11 @@ int main()
                     cout << "This is your menu:\n"
                          << "0. Exit\n"
                          << "1. Modify member's password\n";
+                    cout<<"Enter your choice: ";
                     cin >> choice2;
                     if (choice2 == 1)
                     {
-                        modifyPassword(admin);
+                        modifyPassword();
                     }
                     else
                     {

@@ -16,7 +16,7 @@ using std::string;
 // Function declarations
 void registerMember(Guest &guest);
 void viewSupporters(Guest &guest);
-void modifyPassword(Admin &admin);
+void modifyPassword();
 void search(string cityName, int creditPointCondition, vector<Supporter> listSup);
 void sendRequest(std::vector<Supporter> &listSup, Member &mem);
 int loginMem(std::vector<Member> ListofMem, string usernameVal, string passwordVal);
