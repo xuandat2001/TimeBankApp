@@ -1,6 +1,6 @@
 #include "Function.h"
 
-// LAm's Finctions
+// LAm's Functions
 void registerMember(Guest &guest)
 {
     fstream myfile;
